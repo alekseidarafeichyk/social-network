@@ -7,7 +7,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Setting from "./components/Setting/Setting";
-import {RootStateType} from './components/redux/state'
+import {RootStateType, updateNewMessageText, updateNewPostText} from './components/redux/state'
 import Dialogs from "./components/Dialogs/Dialogs";
 import {addPostCallBack, addMessageCallBack} from './components/redux/state'
 
@@ -24,10 +24,14 @@ function App(props: AppType) {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Route path={'/profile'}
-                           render={() => <Profile posts={props.state.profilePage.posts} addPostCallBack={addPostCallBack}/>}/>
-                    <Route path={'/dialogs'} render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                                    messages={props.state.dialogsPage.messages}
+                           render={() => <Profile posts={props.state.profilePage}
+                                                  addPostCallBack={addPostCallBack}
+                                                  updateNewPostText={updateNewPostText}/>}
+
+                    />
+                    <Route path={'/dialogs'} render={() => <Dialogs dialogsPage={props.state.dialogsPage}
                                                                     addMessageCallBack={addMessageCallBack}
+                                                                    updateNewMessageText={updateNewMessageText}
                     />}/>
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>

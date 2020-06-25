@@ -1,25 +1,31 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
-import {PostType} from "../../redux/state";
+import {PostType, ProfilePageType} from "../../redux/state";
 
 type MyPostsType = {
-    posts: Array<PostType>,
-    addPostCallBack: (postText: string) => void
+    posts: ProfilePageType,
+    addPostCallBack: (postText: string) => void,
+    updateNewPostText: (updateText: string) => void,
 }
 
 function MyPosts(props: MyPostsType) {
 
-    let postElements = props.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
+    let postElements = props.posts.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
+    //let newPostElement = React.createRef<HTMLTextAreaElement>();
 
 
     const addPost = () => {
-        if (newPostElement.current) {
-            props.addPostCallBack(newPostElement.current.value)
-            newPostElement.current.value='';
-        }
+        // if (newPostElement.current) {
+        //     let text = newPostElement.current.value
+        //     props.addPostCallBack(props.posts.newPostText)
+        // }
+        props.addPostCallBack(props.posts.newPostText)
+    }
+
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     return (
@@ -28,9 +34,12 @@ function MyPosts(props: MyPostsType) {
                 <h2>My posts</h2>
                 <div>
                     <div>
-                        <textarea className={s.textarea}
-                                  placeholder='write what you wish'
-                                  ref={newPostElement}></textarea>
+                        <textarea
+                            value={props.posts.newPostText}
+                            onChange={onPostChange}
+                            className={s.textarea}
+                            placeholder='write what you wish'
+                           />
                     </div>
                     <div>
                         <button className={s.btn} onClick={addPost}>Add post</button>

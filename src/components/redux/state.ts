@@ -11,23 +11,25 @@ export type DialogType = {
 }
 
 export type PostType = {
-    id : string ,
+    id: string,
     message: string,
     likeCounts: number
 }
 
 export type ProfilePageType = {
     posts: Array<PostType>,
+    newPostText: string
 }
 
 export type DialogsPageType = {
     dialogs: Array<DialogType>,
-    messages: Array<MessageType>
+    messages: Array<MessageType>,
+    newMessageText: string,
 }
 
 export type RootStateType = {
     profilePage: ProfilePageType,
-    dialogsPage: DialogsPageType
+    dialogsPage: DialogsPageType,
 }
 
 let state: RootStateType = {
@@ -35,7 +37,8 @@ let state: RootStateType = {
         posts: [
             {id: v1(), message: 'Hi', likeCounts: 25},
             {id: v1(), message: 'Hello', likeCounts: 20},
-        ]
+        ],
+        newPostText: '',
     },
     dialogsPage: {
         dialogs: [
@@ -50,30 +53,44 @@ let state: RootStateType = {
             {message: 'h1'},
             {message: 'How yo`re doing?'},
             {message: 'bye'},
-        ]
+        ],
+        newMessageText: '',
     },
 }
 
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
+    rerenderEntireTree(state)
+
+}
+
 export const addPostCallBack = (postText: string) => {
-    let newPost : PostType =  {
+    let newPost: PostType = {
         id: v1(),
         message: postText,
         likeCounts: 0
     }
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = ''
+
     rerenderEntireTree(state)
 }
 
-export const addMessageCallBack = (messageText : string) => {
-    let newMessage : MessageType = {
-        message : messageText
+export const updateNewMessageText = (newMessage: string) => {
+    state.dialogsPage.newMessageText = newMessage;
+    rerenderEntireTree(state)
+}
+
+export const addMessageCallBack = (messageText: string) => {
+    let newMessage: MessageType = {
+        message: messageText
     }
 
-    state.dialogsPage.messages.push(newMessage)
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.newMessageText = ''
 
     rerenderEntireTree(state);
 }
-
 
 export default state;
 
