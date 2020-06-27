@@ -1,5 +1,8 @@
 import {v1} from "uuid";
-import rerenderEntireTree from "../../rerender";
+
+let rerenderEntireTree = (props : RootStateType) => {
+}
+
 
 export type MessageType = {
     message: string
@@ -90,6 +93,10 @@ export const addMessageCallBack = (messageText: string) => {
     state.dialogsPage.newMessageText = ''
 
     rerenderEntireTree(state);
+}
+
+export const  subscribe = (observer: any) => {
+    rerenderEntireTree = observer
 }
 
 export default state;

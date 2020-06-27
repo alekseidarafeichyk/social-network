@@ -13,14 +13,7 @@ function MyPosts(props: MyPostsType) {
 
     let postElements = props.posts.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
 
-    //let newPostElement = React.createRef<HTMLTextAreaElement>();
-
-
     const addPost = () => {
-        // if (newPostElement.current) {
-        //     let text = newPostElement.current.value
-        //     props.addPostCallBack(props.posts.newPostText)
-        // }
         props.addPostCallBack(props.posts.newPostText)
     }
 
