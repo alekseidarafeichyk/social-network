@@ -7,6 +7,7 @@ import App from "./App";
 
 
 let rerenderEntireTree = (props: RootStateType) => {
+    debugger
     ReactDOM.render(
         <React.StrictMode>
             <App state={state}/>

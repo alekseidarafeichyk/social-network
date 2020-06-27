@@ -35,7 +35,7 @@ export type RootStateType = {
     dialogsPage: DialogsPageType,
 }
 
-let state: RootStateType = {
+ let state: RootStateType = {
     profilePage: {
         posts: [
             {id: v1(), message: 'Hi', likeCounts: 25},
@@ -95,7 +95,7 @@ export const addMessageCallBack = (messageText: string) => {
     rerenderEntireTree(state);
 }
 
-export const  subscribe = (observer: any) => {
+export const  subscribe = (observer: (props: RootStateType) => void) => {
     rerenderEntireTree = observer
 }
 
