@@ -1,24 +1,28 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import state, {RootStateType, subscribe} from "./components/redux/state";
+import store, {StoreType} from "./components/redux/state"
 import ReactDOM from "react-dom";
 import App from "./App";
 
 
-let rerenderEntireTree = (props: RootStateType) => {
-    debugger
+let rerenderEntireTree = (store: StoreType) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state}/>
+            <App  state={store.getState()}
+                  addPostCallBack={store.addPostCallBack.bind(store)}
+                  updateNewPostText={store.updateNewPostText.bind(store)}
+                  addMessageCallBack={store.addMessageCallBack.bind(store)}
+                  updateNewMessageText={store.updateNewMessageText.bind(store)}
+            />
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
 
-rerenderEntireTree(state);
+rerenderEntireTree(store);
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
 
 
 // If you want your app to work offline and load faster, you can change

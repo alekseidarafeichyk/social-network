@@ -1,8 +1,70 @@
 import {v1} from "uuid";
 
-let rerenderEntireTree = (props : RootStateType) => {
-}
+let store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {id: v1(), message: 'Hi', likeCounts: 25},
+                {id: v1(), message: 'Hello', likeCounts: 20},
+            ],
+            newPostText: '',
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: v1(), name: 'Alex'},
+                {id: v1(), name: 'Dima'},
+                {id: v1(), name: 'Azamat'},
+                {id: v1(), name: 'Sergey'},
+                {id: v1(), name: 'Alexander'},
+            ],
+            messages: [
+                {message: 'Hello'},
+                {message: 'h1'},
+                {message: 'How yo`re doing?'},
+                {message: 'bye'},
+            ],
+            newMessageText: '',
+        },
+    },
+    getState(){
+        return this._state
+    },
+    _callSubscriber() {
+    },
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this)
+    },
+    addPostCallBack(postText: string) {
+        let newPost: PostType = {
+            id: v1(),
+            message: postText,
+            likeCounts: 0
+        }
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = ''
 
+        this._callSubscriber(this)
+    },
+    updateNewMessageText(newMessage: string) {
+        this._state.dialogsPage.newMessageText = newMessage;
+        this._callSubscriber(this)
+    },
+    addMessageCallBack(messageText: string) {
+        let newMessage: MessageType = {
+            message: messageText
+        }
+
+        this._state.dialogsPage.messages.push(newMessage);
+        this._state.dialogsPage.newMessageText = ''
+
+        this._callSubscriber(this);
+    },
+    subscribe(observer: (props: StoreType) => void) {
+        this._callSubscriber = observer
+    },
+
+}
 
 export type MessageType = {
     message: string
@@ -35,71 +97,19 @@ export type RootStateType = {
     dialogsPage: DialogsPageType,
 }
 
- let state: RootStateType = {
-    profilePage: {
-        posts: [
-            {id: v1(), message: 'Hi', likeCounts: 25},
-            {id: v1(), message: 'Hello', likeCounts: 20},
-        ],
-        newPostText: '',
-    },
-    dialogsPage: {
-        dialogs: [
-            {id: v1(), name: 'Alex'},
-            {id: v1(), name: 'Dima'},
-            {id: v1(), name: 'Azamat'},
-            {id: v1(), name: 'Sergey'},
-            {id: v1(), name: 'Alexander'},
-        ],
-        messages: [
-            {message: 'Hello'},
-            {message: 'h1'},
-            {message: 'How yo`re doing?'},
-            {message: 'bye'},
-        ],
-        newMessageText: '',
-    },
+export type StoreType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: (props: StoreType) => void
+    updateNewPostText: (newText: string) => void
+    addPostCallBack: (postText: string) => void
+    updateNewMessageText: (newMessage: string) => void
+    addMessageCallBack: (messageText: string) => void
+    subscribe: (observer: (props: StoreType) => void) => void
 }
 
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText;
-    rerenderEntireTree(state)
+export default store;
 
-}
-
-export const addPostCallBack = (postText: string) => {
-    let newPost: PostType = {
-        id: v1(),
-        message: postText,
-        likeCounts: 0
-    }
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = ''
-
-    rerenderEntireTree(state)
-}
-
-export const updateNewMessageText = (newMessage: string) => {
-    state.dialogsPage.newMessageText = newMessage;
-    rerenderEntireTree(state)
-}
-
-export const addMessageCallBack = (messageText: string) => {
-    let newMessage: MessageType = {
-        message: messageText
-    }
-
-    state.dialogsPage.messages.push(newMessage);
-    state.dialogsPage.newMessageText = ''
-
-    rerenderEntireTree(state);
-}
-
-export const  subscribe = (observer: (props: RootStateType) => void) => {
-    rerenderEntireTree = observer
-}
-
-export default state;
 
 
 
