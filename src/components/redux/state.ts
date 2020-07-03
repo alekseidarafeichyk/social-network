@@ -1,5 +1,37 @@
 import {v1} from "uuid";
 
+
+export type StoreType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: (props: StoreType) => void
+    subscribe: (observer: (props: StoreType) => void) => void
+    dispatch: (action: ActionsType) => void
+}
+
+
+export type ActionsType = UpdatePostActionType | AddPostActionType |UpdateMessageActionType | AddMessageActionType
+
+type UpdatePostActionType = {
+    type: 'Update-Post'
+    newText: string
+}
+
+type AddPostActionType = {
+    type: 'Add-Post'
+    postText: string
+}
+
+type UpdateMessageActionType = {
+    type: 'Update-Message'
+    newMessage: string
+}
+
+type AddMessageActionType = {
+    type: 'Add-Message'
+    messageText: string
+}
+
 let store: StoreType = {
     _state: {
         profilePage: {
@@ -26,44 +58,40 @@ let store: StoreType = {
             newMessageText: '',
         },
     },
-    getState(){
+    getState() {
         return this._state
     },
     _callSubscriber() {
     },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this)
-    },
-    addPostCallBack(postText: string) {
-        let newPost: PostType = {
-            id: v1(),
-            message: postText,
-            likeCounts: 0
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = ''
-
-        this._callSubscriber(this)
-    },
-    updateNewMessageText(newMessage: string) {
-        this._state.dialogsPage.newMessageText = newMessage;
-        this._callSubscriber(this)
-    },
-    addMessageCallBack(messageText: string) {
-        let newMessage: MessageType = {
-            message: messageText
-        }
-
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = ''
-
-        this._callSubscriber(this);
-    },
     subscribe(observer: (props: StoreType) => void) {
         this._callSubscriber = observer
     },
+    dispatch(action) {
 
+        if (action.type === 'Update-Post') {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this)
+        } else if (action.type === 'Add-Post') {
+            let newPost: PostType = {
+                id: v1(),
+                message: action.postText,
+                likeCounts: 0
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this)
+        } else if (action.type === 'Update-Message') {
+            this._state.dialogsPage.newMessageText = action.newMessage;
+            this._callSubscriber(this)
+        } else if (action.type === 'Add-Message') {
+            let newMessage: MessageType = {
+                message: action.messageText
+            }
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newMessageText = ''
+            this._callSubscriber(this);
+        }
+    },
 }
 
 export type MessageType = {
@@ -97,16 +125,6 @@ export type RootStateType = {
     dialogsPage: DialogsPageType,
 }
 
-export type StoreType = {
-    _state: RootStateType
-    getState: () => RootStateType
-    _callSubscriber: (props: StoreType) => void
-    updateNewPostText: (newText: string) => void
-    addPostCallBack: (postText: string) => void
-    updateNewMessageText: (newMessage: string) => void
-    addMessageCallBack: (messageText: string) => void
-    subscribe: (observer: (props: StoreType) => void) => void
-}
 
 export default store;
 

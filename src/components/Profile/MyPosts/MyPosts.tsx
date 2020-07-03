@@ -1,12 +1,11 @@
 import React, {ChangeEvent} from "react";
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
-import {ProfilePageType} from "../../redux/state";
+import {ActionsType, ProfilePageType} from "../../redux/state";
 
 type MyPostsType = {
     posts: ProfilePageType,
-    addPostCallBack: (postText: string) => void,
-    updateNewPostText: (updateText: string) => void,
+    dispatch: (action: ActionsType) => void
 }
 
 function MyPosts(props: MyPostsType) {
@@ -14,11 +13,11 @@ function MyPosts(props: MyPostsType) {
     let postElements = props.posts.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
 
     const addPost = () => {
-        props.addPostCallBack(props.posts.newPostText)
+        props.dispatch({type: 'Add-Post', postText: props.posts.newPostText})
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
+        props.dispatch({type: 'Update-Post', newText: e.currentTarget.value})
     }
 
     return (
@@ -32,7 +31,7 @@ function MyPosts(props: MyPostsType) {
                             onChange={onPostChange}
                             className={s.textarea}
                             placeholder='write what you wish'
-                           />
+                        />
                     </div>
                     <div>
                         <button className={s.btn} onClick={addPost}>Add post</button>
