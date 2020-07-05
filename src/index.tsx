@@ -11,10 +11,6 @@ let rerenderEntireTree = (store: StoreType) => {
         <React.StrictMode>
             <App state={store.getState()}
                  dispatch={store.dispatch.bind(store)}
-                // addPostCallBack={store.addPostCallBack.bind(store)}
-                // updateNewPostText={store.updateNewPostText.bind(store)}
-                // addMessageCallBack={store.addMessageCallBack.bind(store)}
-                // updateNewMessageText={store.updateNewMessageText.bind(store)}
             />
         </React.StrictMode>,
         document.getElementById('root')
