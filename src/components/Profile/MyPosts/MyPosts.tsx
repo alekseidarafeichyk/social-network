@@ -2,30 +2,24 @@ import React, {ChangeEvent} from "react";
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
 import {ProfilePageType} from "../../redux/store";
-import {addPostActionCreator, onPostChangeActionCreator} from "../../redux/profile-reducer";
-import {ActionsType} from "../../redux/redux-store";
 
 type MyPostsType = {
-    posts: ProfilePageType,
-    dispatch: (action: ActionsType) => void
+    onPostChange: (letter: string) => void
+    addPost: (text: string) => void
+    posts: ProfilePageType
 }
 
-
 function MyPosts(props: MyPostsType) {
-
     let postElements = props.posts.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let letter = e.currentTarget.value
-        let action = onPostChangeActionCreator(letter)
-        props.dispatch(action)
+        props.onPostChange(letter)
     }
 
-
     const addPost = () => {
-        let text= props.posts.newPostText
-        let action = addPostActionCreator(text)
-        props.dispatch(action)
+        let text = props.posts.newPostText
+        props.addPost(text)
     }
 
     return (

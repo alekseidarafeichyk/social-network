@@ -3,12 +3,11 @@ import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsPageType} from "../redux/store";
-import {addMessageActionCreator, onMessageChangeActionCreator} from "../redux/dialogs-reducer";
-import { ActionsType } from "../redux/redux-store";
 
 type DialogsPropsType = {
-    dialogsPage: DialogsPageType,
-    dispatch: (action: ActionsType) => void
+    dialogsPage: DialogsPageType
+    onChangeMessageText: (text: string) => void
+    addMessage: (text: string) => void
 }
 
 function Dialogs(props: DialogsPropsType) {
@@ -17,14 +16,12 @@ function Dialogs(props: DialogsPropsType) {
 
     const onChangeMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value
-        let action = onMessageChangeActionCreator(text)
-        props.dispatch(action)
+        props.onChangeMessageText(text)
     }
 
     const addMessage = () => {
         let text = props.dialogsPage.newMessageText
-        let action = addMessageActionCreator(text)
-        props.dispatch(action)
+        props.addMessage(text)
     }
 
     return (

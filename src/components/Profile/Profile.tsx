@@ -1,22 +1,18 @@
 import React from "react";
-import c from './Profile.module.css';
-import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../redux/store";
-import {ActionsType} from "../redux/redux-store";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {RootState} from "../redux/redux-store";
 
 type ProfileType = {
-    posts: ProfilePageType ,
-    dispatch: (action: ActionsType) => void
+    store: RootState
 }
 
 function Profile(props: ProfileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts
-                posts={props.posts}
-                dispatch={props.dispatch}
+            <MyPostsContainer
+                store={props.store}
             />
         </div>
     );

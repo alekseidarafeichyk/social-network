@@ -4,14 +4,18 @@ import * as serviceWorker from './serviceWorker';
 import store from "./components/redux/redux-store"
 import ReactDOM from "react-dom";
 import App from "./App";
+import {BrowserRouter} from "react-router-dom";
+import {RootStateType} from './components/redux/store';
 
-let rerenderEntireTree = (state: any) => {
-    debugger
+
+let rerenderEntireTree = (state: RootStateType) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state}
-                 dispatch={store.dispatch.bind(store)}
-            />
+            <BrowserRouter>
+                <App
+                    store={store}
+                />
+            </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')
     );

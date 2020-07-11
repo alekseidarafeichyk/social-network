@@ -52,6 +52,7 @@ const dialogsReducer = (state = initialState, action: ActionsType) => {
             return state;
         default:
             return state
+
     }
 }
 
