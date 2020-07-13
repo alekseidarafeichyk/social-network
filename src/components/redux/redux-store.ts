@@ -7,7 +7,6 @@ export type ActionsType = UpdatePostActionType |
     UpdateMessageActionType |
     AddMessageActionType
 
-
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer
