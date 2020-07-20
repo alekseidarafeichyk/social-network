@@ -1,6 +1,6 @@
-import { DialogsPageType, DialogType, MessageType} from "./store";
-import {v1} from "uuid";
-import {ActionsType} from "./redux-store";
+import {DialogType, MessageType} from './store';
+import {v1} from 'uuid';
+import {ActionsType} from './redux-store';
 
 const UPDATE_MESSAGE = 'Update-Message'
 const ADD_MESSAGE = 'Add-Message'
@@ -22,7 +22,7 @@ export type InitialState = {
     newMessageText: string,
 }
 
-let initialState : InitialState = {
+let initialState: InitialState = {
     dialogs: [
         {id: v1(), name: 'Alex'},
         {id: v1(), name: 'Dima'},
@@ -31,25 +31,33 @@ let initialState : InitialState = {
         {id: v1(), name: 'Alexander'},
     ],
     messages: [
-        {message: 'Hello'},
-        {message: 'h1'},
-        {message: 'How yo`re doing?'},
-        {message: 'bye'},
+        {id: v1(), message: 'Hello'},
+        {id: v1(), message: 'h1'},
+        {id: v1(), message: 'How yo`re doing?'},
+        {id: v1(), message: 'bye'},
     ],
     newMessageText: '',
 }
 const dialogsReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
-        case "Update-Message":
-            state.newMessageText = action.newMessage;
-            return state;
-        case "Add-Message":
+        case 'Update-Message':
+            return {
+                ...state,
+                newMessageText: action.newMessage
+            }
+        case 'Add-Message':
             let newMessage: MessageType = {
+                id: v1(),
                 message: action.messageText
             }
-            state.messages.push(newMessage);
-            state.newMessageText = '';
-            return state;
+            return {
+                ...state,
+                messages: [
+                    ...state.messages,
+                    newMessage,
+                ],
+                newMessageText: ''
+            }
         default:
             return state
 

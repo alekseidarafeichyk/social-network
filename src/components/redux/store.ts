@@ -58,6 +58,7 @@ import {v1} from "uuid";
 // }
 
 export type MessageType = {
+    id: string
     message: string
 }
 

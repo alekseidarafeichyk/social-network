@@ -5,7 +5,6 @@ import store from './components/redux/redux-store'
 import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
-import {RootStateType} from './components/redux/store';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(

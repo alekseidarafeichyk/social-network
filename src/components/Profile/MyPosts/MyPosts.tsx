@@ -2,6 +2,7 @@ import React, {ChangeEvent} from "react";
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
 import {ProfilePageType} from "../../redux/store";
+import {v1} from 'uuid';
 
 type MyPostsType = {
     onPostChange: (letter: string) => void
@@ -10,7 +11,7 @@ type MyPostsType = {
 }
 
 function MyPosts(props: MyPostsType) {
-    let postElements = props.posts.posts.map(post => <Post message={post.message} likeCounts={post.likeCounts}/>)
+    let postElements = props.posts.posts.map(post => <Post key={post.id} message={post.message} likeCounts={post.likeCounts}/>)
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let letter = e.currentTarget.value
