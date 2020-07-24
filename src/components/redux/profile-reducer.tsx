@@ -6,17 +6,7 @@ const UPDATE_POST = 'Update-Post'
 const ADD_POST = 'Add-Post'
 
 
-export type UpdatePostActionType = {
-    type: typeof UPDATE_POST
-    newText: string
-}
-
-export type AddPostActionType = {
-    type: typeof ADD_POST
-    postText: string
-}
-
-export type InitialStateType = {
+type InitialStateType = {
     posts: Array<PostType>,
     newPostText: string
 }
@@ -29,12 +19,24 @@ const initialState: InitialStateType = {
     newPostText: ''
 }
 
+export type ProfileActionType = UpdatePostActionType | AddPostActionType
+
+export type UpdatePostActionType = {
+    type: typeof UPDATE_POST
+    newText: string
+}
+
+export type AddPostActionType = {
+    type: typeof ADD_POST
+    postText: string
+}
+
 const profileReducer = (state
-                            = initialState, action: ActionsType) => {
+                            = initialState, action: ProfileActionType): InitialStateType => {
     switch (action.type) {
-        case 'Update-Post':
+        case UPDATE_POST:
             return {...state, newPostText: action.newText}
-        case 'Add-Post':
+        case ADD_POST:
             let newPost: PostType = {
                 id: v1(),
                 message: action.postText,
