@@ -1,22 +1,35 @@
 import React from 'react';
 import s from './Users.module.css'
 import {UsersType} from '../redux/UsersReducer/users-reducer';
+import axios from 'axios';
+import userPhoto from '../../assets/images/user.png'
 
 type UsersPropsType = {
     userPage: Array<UsersType>
-    follow: (userId:string) => void
-    unFollow: (userId: string) => void
+    follow: (userId:number) => void
+    unFollow: (userId: number) => void
     setUsers: (users: Array<UsersType>) => void
 }
 
 function Users(props: UsersPropsType) {
+
+
+    if (props.userPage.length === 0) {
+
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response =>
+                props.setUsers(response.data.items)
+            )
+    }
+
     return (
         <div>
+
             {
                 props.userPage.map(us => <div key={us.id}>
                     <span>
                         <div>
-                            <img src={us.fhotoUrl} alt="" className={s.photo}/>
+                            <img src={us.photos.small != null ? us.photos.small : userPhoto } alt="" className={s.photo}/>
                         </div>
                         <div>
                             {
@@ -27,12 +40,12 @@ function Users(props: UsersPropsType) {
                         </div>
                     </span>
                     <span>
-                        <div>{us.fullName}</div>
+                        <div>{us.name}</div>
                         <div>{us.status}</div>
                     </span>
                     <span>
-                        <div>{us.location.country}</div>
-                        <div>{us.location.city}</div>
+                        <div>{'us.location.country'}</div>
+                        <div>{'us.location.city'}</div>
                     </span>
                     </div>
                 )

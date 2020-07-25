@@ -5,53 +5,34 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 
 let InitialState: InitialStateType = {
-    users: [
-        {
-            id: v1(),
-            fhotoUrl: 'https://www.litmir.me/data/Author/2000/2932/%D0%A4%D0%BE%D1%82%D0%BE_%D0%94%D0%B0%D1%80%D0%B2%D0%B8%D0%BD_%D0%A7%D0%B0%D1%80%D0%BB%D1%8C%D0%B7_57635.jpg',
-            followed: true,
-            fullName: 'Alex S.',
-            status: 'Hello',
-            location: {country: 'Belarus', city: 'Minsk'}
-        },
-        {
-            id: v1(),
-            fhotoUrl: 'https://www.litmir.me/data/Author/2000/2932/%D0%A4%D0%BE%D1%82%D0%BE_%D0%94%D0%B0%D1%80%D0%B2%D0%B8%D0%BD_%D0%A7%D0%B0%D1%80%D0%BB%D1%8C%D0%B7_57635.jpg',
-            followed: false,
-            fullName: 'Dmitry K.',
-            status: 'Hi',
-            location: {country: 'Ukraine', city: 'Kiev'}
-        },
-        {
-            id: v1(),
-            fhotoUrl: 'https://www.litmir.me/data/Author/2000/2932/%D0%A4%D0%BE%D1%82%D0%BE_%D0%94%D0%B0%D1%80%D0%B2%D0%B8%D0%BD_%D0%A7%D0%B0%D1%80%D0%BB%D1%8C%D0%B7_57635.jpg',
-            followed: true,
-            fullName: 'Alexander L.',
-            status: 'Ky',
-            location: {country: 'Poland', city: 'Warszawa'}
-        },
-        {
-            id: v1(),
-            fhotoUrl: 'https://www.litmir.me/data/Author/2000/2932/%D0%A4%D0%BE%D1%82%D0%BE_%D0%94%D0%B0%D1%80%D0%B2%D0%B8%D0%BD_%D0%A7%D0%B0%D1%80%D0%BB%D1%8C%D0%B7_57635.jpg',
-            followed: false,
-            fullName: 'Anton M.',
-            status: 'Hi-hi',
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-    ]
+    users: []
 }
 
 type InitialStateType = {
     users: Array<UsersType>
 }
 
+// export type UsersType = {
+//     id: string
+//     fhotoUrl: string
+//     followed: boolean
+//     fullName: string
+//     status: string
+//     location: Location
+// }
+
 export type UsersType = {
-    id: string
-    fhotoUrl: string
+    name: string
+    id: number
+    uniqueUrlName: null
+    photos: FhotoUserType
+    status: null
     followed: boolean
-    fullName: string
-    status: string
-    location: Location
+}
+
+type FhotoUserType = {
+    small: null | string
+    large: null | string
 }
 
 type Location = {
@@ -63,12 +44,12 @@ export type UserActionType = FollowType | UnFollowType | SetUsersType;
 
 type FollowType = {
     type: typeof FOLLOW
-    userId: string
+    userId: number
 }
 
 type UnFollowType = {
     type: typeof UNFOLLOW
-    userId: string
+    userId: number
 }
 
 type SetUsersType = {
@@ -116,13 +97,13 @@ const usersReducer = (state = InitialState, action: UserActionType): InitialStat
     }
 };
 
-export const followAc = (userId: string) => {
+export const followAc = (userId: number) => {
     return {
         type: FOLLOW as typeof FOLLOW,
         userId
     }
 }
-export const unFollowAc = (userId: string) => {
+export const unFollowAc = (userId: number) => {
     return {
         type: UNFOLLOW as typeof UNFOLLOW,
         userId
