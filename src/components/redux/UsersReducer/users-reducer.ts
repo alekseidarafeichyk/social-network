@@ -12,15 +12,6 @@ type InitialStateType = {
     users: Array<UsersType>
 }
 
-// export type UsersType = {
-//     id: string
-//     fhotoUrl: string
-//     followed: boolean
-//     fullName: string
-//     status: string
-//     location: Location
-// }
-
 export type UsersType = {
     name: string
     id: number
