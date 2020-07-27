@@ -2,3 +2,7 @@
     width: 80px;
     heigth: 80px;
 }
+
+.selectedPage {
+    font-weight: bold;
+}
