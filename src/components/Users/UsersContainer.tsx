@@ -5,12 +5,14 @@ import {
     followAc,
     setCurrentPageAC,
     setTotalCountAC,
-    setUsers,
+    setUsers, toogleIsFetchingAC,
     unFollowAc,
     UsersType
 } from '../redux/UsersReducer/users-reducer';
 import axios from 'axios';
 import Users from './Users';
+import styles from './UsersContainer.module.css'
+import {CircularProgress} from '@material-ui/core';
 
 
 type UsersPropsType = {
@@ -23,36 +25,47 @@ type UsersPropsType = {
     setUsers: (users: Array<UsersType>) => void
     setCurrent: (currentPage: number) => void
     setTotalCount: (totalCount: number) => void
+    toogleIsFetching: (value: boolean) => void
+    isFetching: boolean
 }
 
 class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     componentDidMount() {
+        this.props.toogleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toogleIsFetching(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalCount(response.data.totalCount)
             });
     }
 
     onPageChanged = (currentPage: number) => {
+        this.props.toogleIsFetching(true)
         this.props.setCurrent(currentPage)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toogleIsFetching(false)
                 this.props.setUsers(response.data.items)
             })
     }
 
     render() {
-        return  <Users
-            totalUsersCount={this.props.totalUsersCount}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}
-            onPageChanged={this.onPageChanged}
-            userPage={this.props.userPage}
-            follow={this.props.follow}
-            unFollow={this.props.unFollow}
-        />
+        return <>
+            {this.props.isFetching ? <CircularProgress disableShrink/> : null}
+
+
+            <Users
+                totalUsersCount={this.props.totalUsersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                userPage={this.props.userPage}
+                follow={this.props.follow}
+                unFollow={this.props.unFollow}
+            />
+        </>
     }
 }
 
@@ -61,11 +74,12 @@ let mapStateToProps = (state: RootState) => {
         userPage: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     }
 }
 
-let mapDispatchToProps =(dispatch: any) => {
+let mapDispatchToProps = (dispatch: any) => {
     return {
         follow: (userId: number) => {
             let action = followAc(userId)
@@ -83,14 +97,18 @@ let mapDispatchToProps =(dispatch: any) => {
             let action = setCurrentPageAC(currentPage)
             dispatch(action)
         },
-        setTotalCount : (totalCount: number) => {
+        setTotalCount: (totalCount: number) => {
             let action = setTotalCountAC(totalCount);
+            dispatch(action)
+        },
+        toogleIsFetching: (value: boolean) => {
+            let action = toogleIsFetchingAC(value);
             dispatch(action)
         }
     }
 }
 
-let UsersContainer = connect(mapStateToProps,mapDispatchToProps)(UsersFCComponent)
+let UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersFCComponent)
 
-export default  UsersContainer
+export default UsersContainer
 
