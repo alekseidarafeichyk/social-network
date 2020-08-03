@@ -2,11 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {RootState} from '../redux/redux-store';
 import {
-    followAc,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsers, toogleIsFetchingAC,
-    unFollowAc,
+    follow,
+    setCurrentPage,
+    setTotalCount,
+    setUsers, toogleIsFetching,
+    unFollow,
     UsersType
 } from '../redux/UsersReducer/users-reducer';
 import axios from 'axios';
@@ -20,13 +20,13 @@ type UsersPropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     setUsers: (users: Array<UsersType>) => void
-    setCurrent: (currentPage: number) => void
+    setCurrentPage: (currentPage: number) => void
     setTotalCount: (totalCount: number) => void
     toogleIsFetching: (value: boolean) => void
-    isFetching: boolean
 }
 
 class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
@@ -43,7 +43,7 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     onPageChanged = (currentPage: number) => {
         this.props.toogleIsFetching(true)
-        this.props.setCurrent(currentPage)
+        this.props.setCurrentPage(currentPage)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.toogleIsFetching(false)
@@ -79,36 +79,7 @@ let mapStateToProps = (state: RootState) => {
     }
 }
 
-let mapDispatchToProps = (dispatch: any) => {
-    return {
-        follow: (userId: number) => {
-            let action = followAc(userId)
-            dispatch(action)
-        },
-        unFollow: (userId: number) => {
-            let action = unFollowAc(userId)
-            dispatch(action)
-        },
-        setUsers: (users: Array<UsersType>) => {
-            let action = setUsers(users)
-            dispatch(action)
-        },
-        setCurrent: (currentPage: number) => {
-            let action = setCurrentPageAC(currentPage)
-            dispatch(action)
-        },
-        setTotalCount: (totalCount: number) => {
-            let action = setTotalCountAC(totalCount);
-            dispatch(action)
-        },
-        toogleIsFetching: (value: boolean) => {
-            let action = toogleIsFetchingAC(value);
-            dispatch(action)
-        }
-    }
-}
-
-let UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersFCComponent)
+let UsersContainer = connect(mapStateToProps, {follow, unFollow,setUsers, setCurrentPage, setTotalCount, toogleIsFetching})(UsersFCComponent)
 
 export default UsersContainer
 

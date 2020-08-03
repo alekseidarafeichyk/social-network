@@ -118,13 +118,13 @@ const usersReducer = (state = InitialState, action: UserActionType): InitialStat
     }
 };
 
-export const followAc = (userId: number) => {
+export const follow = (userId: number) => {
     return {
         type: FOLLOW as typeof FOLLOW,
         userId
     }
 }
-export const unFollowAc = (userId: number) => {
+export const unFollow = (userId: number) => {
     return {
         type: UNFOLLOW as typeof UNFOLLOW,
         userId
@@ -137,21 +137,22 @@ export const setUsers = (users: Array<UsersType>) => {
     }
 }
 
-export const setCurrentPageAC = (currentPage: number) => {
+
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE as typeof SET_CURRENT_PAGE,
         currentPage
     }
 }
 
-export const setTotalCountAC = (totalCount: number) => {
+export const setTotalCount = (totalCount: number) => {
     return {
         type: SET_TOTAL_COUNT as typeof SET_TOTAL_COUNT,
         totalCount
     }
 }
 
-export const toogleIsFetchingAC = (value: boolean) => {
+export const toogleIsFetching = (value: boolean) => {
     return {
         type: TOGGLE_IS_FETCHING as typeof TOGGLE_IS_FETCHING,
         value

@@ -1,11 +1,11 @@
 import {v1} from 'uuid';
 import usersReducer, {
-    followAc,
-    unFollowAc,
+    follow,
+    unFollow,
     setUsers,
-    setCurrentPageAC,
-    setTotalCountAC,
-    InitialStateType, toogleIsFetchingAC
+    setCurrentPage,
+    setTotalCount,
+    InitialStateType, toogleIsFetching
 } from './users-reducer';
 
 
@@ -67,7 +67,7 @@ beforeEach(() => {
 })
 
 test('one of the users should change false to true', () => {
-    let action = followAc(3)
+    let action = follow(3)
 
     let endState = usersReducer(startState, action)
 
@@ -131,7 +131,7 @@ beforeEach(() => {
 })
 
 test('one of the users should change true to false', () => {
-    let action = unFollowAc(1)
+    let action = unFollow(1)
 
     let endState = usersReducer(startState, action)
 
@@ -307,7 +307,7 @@ beforeEach(() => {
 })
 
 test('should change the page number', () => {
-    let action = setCurrentPageAC(4)
+    let action = setCurrentPage(4)
 
     let endState = usersReducer(startState, action)
 
@@ -371,7 +371,7 @@ beforeEach(() => {
 })
 
 test('should change the number of pages', () => {
-    let action = setTotalCountAC(4)
+    let action = setTotalCount(4)
 
     let endState = usersReducer(startState, action)
 
@@ -435,7 +435,7 @@ beforeEach(() => {
 })
 
 test('should change isFetching', () => {
-    let action = toogleIsFetchingAC(true)
+    let action = toogleIsFetching(true)
 
     let endState = usersReducer(startState, action)
 
