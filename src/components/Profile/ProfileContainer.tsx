@@ -18,7 +18,6 @@ type MapDispatchPropsType = {
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 
-
 class ProfileContainer extends React.Component<ProfileContainerPropsType, RootState> {
     componentDidMount() {
         let userId = this.props.match.params.userId
@@ -53,4 +52,4 @@ type ProfileDetailParams = RouteComponentProps<PathParamsType>
 
 let withUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setUserProfile})(withUrlDataContainerComponent);
+export default connect(mapStateToProps,  {setUserProfile})(withUrlDataContainerComponent);

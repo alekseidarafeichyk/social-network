@@ -20,7 +20,7 @@ export type ProfileType = {
     lookingForAJobDescription: string
     fullName: string
     userId: 2,
-    photos:Array<PhotosType>
+    photos: Array<PhotosType>
 }
 
 type ContactsType = {
@@ -90,18 +90,18 @@ const profileReducer = (state
 }
 
 export const onPostChange = (letter: string) => ({
-        type: UPDATE_POST as typeof UPDATE_POST,
+        type: 'UPDATE_POST',
         newText: letter
     }
 )
 
 export const addPost = (text: string) => {
     return {
-        type: ADD_POST as typeof ADD_POST,
+        type: 'ADD_POST',
         postText: text
     }
 }
 
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE as typeof SET_USER_PROFILE, profile})
+export const setUserProfile = (profile: ProfileType) => ({type: 'SET_USER_PROFILE', profile})
 
 export default profileReducer;
