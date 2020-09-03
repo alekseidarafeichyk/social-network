@@ -1,8 +1,8 @@
 import React from 'react';
-import {addMessageActionCreator, onMessageChangeActionCreator} from '../redux/dialogs-reducer';
+import {addMessageActionCreator, onMessageChangeActionCreator} from '../../reducers/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {RootState} from '../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 
 let mapState = (state: RootState) => {
     return {

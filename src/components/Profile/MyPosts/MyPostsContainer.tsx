@@ -1,8 +1,8 @@
 import React from "react";
-import {addPost, onPostChange} from "../../redux/profile-reducer";
+import {addPost, onPostChange} from "../../../reducers/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from 'react-redux';
-import {RootState} from '../../redux/redux-store';
+import {RootState} from '../../../redux/redux-store';
 
 let mapStateToProps = (state: RootState) => {
     return {

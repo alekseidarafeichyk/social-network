@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {RootState} from '../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 import {
     follow,
     setCurrentPage,
@@ -8,7 +8,7 @@ import {
     setUsers, toogleIsFetching,
     unFollow,
     UsersType
-} from '../redux/UsersReducer/users-reducer';
+} from '../../reducers/UsersReducer/users-reducer';
 import axios from 'axios';
 import Users from './Users';
 import styles from './UsersContainer.module.css'
@@ -33,7 +33,7 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     componentDidMount() {
         this.props.toogleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.toogleIsFetching(false)
                 this.props.setUsers(response.data.items)
@@ -44,7 +44,7 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
     onPageChanged = (currentPage: number) => {
         this.props.toogleIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.toogleIsFetching(false)
                 this.props.setUsers(response.data.items)

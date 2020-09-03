@@ -1,6 +1,5 @@
-import {PostType} from './store';
+import {PostType} from '../redux/store';
 import {v1} from 'uuid'
-import {ActionsType} from './redux-store';
 
 const UPDATE_POST = 'UPDATE_POST'
 const ADD_POST = 'ADD_POST'
@@ -68,9 +67,9 @@ export type SetUserProfile = {
 const profileReducer = (state
                             = initialState, action: ProfileActionType): InitialStateType => {
     switch (action.type) {
-        case 'UPDATE_POST':
+        case UPDATE_POST:
             return {...state, newPostText: action.newText}
-        case 'ADD_POST':
+        case ADD_POST:
             let newPost: PostType = {
                 id: v1(),
                 message: action.postText,
@@ -81,7 +80,7 @@ const profileReducer = (state
                 posts: [...state.posts, newPost],
                 newPostText: ''
             };
-        case 'SET_USER_PROFILE' : {
+        case SET_USER_PROFILE : {
             return {...state, profile: action.profile}
         }
         default:
@@ -89,19 +88,10 @@ const profileReducer = (state
     }
 }
 
-export const onPostChange = (letter: string) => ({
-        type: 'UPDATE_POST',
-        newText: letter
-    }
-)
+export const onPostChange = (letter: string) => ({type: UPDATE_POST, newText: letter})
 
-export const addPost = (text: string) => {
-    return {
-        type: 'ADD_POST',
-        postText: text
-    }
-}
+export const addPost = (text: string) => ({type: ADD_POST, postText: text})
 
-export const setUserProfile = (profile: ProfileType) => ({type: 'SET_USER_PROFILE', profile})
+export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile})
 
 export default profileReducer;

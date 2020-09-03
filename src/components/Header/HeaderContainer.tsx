@@ -2,8 +2,8 @@ import React from 'react';
 import Header from './Header';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {RootState} from '../redux/redux-store';
-import {setUserData, InitialAuthStateType} from '../redux/AuthReducer/auth-reducer';
+import {RootState} from '../../redux/redux-store';
+import {setUserData, InitialAuthStateType} from '../../reducers/AuthReducer/auth-reducer';
 
 
 type MapDispatchPropsType = {

@@ -1,8 +1,8 @@
 import {combineReducers, createStore} from 'redux'
-import profileReducer, {ProfileActionType} from './profile-reducer';
-import dialogsReducer, {DialogsActionType} from './dialogs-reducer';
-import usersReducer, {UserActionType} from './UsersReducer/users-reducer';
-import {AuthActionType, authReducer} from './AuthReducer/auth-reducer';
+import profileReducer, {ProfileActionType} from '../reducers/profile-reducer';
+import {DialogsActionType, dialogsReducer} from '../reducers/dialogs-reducer';
+import {UserActionType, usersReducer} from '../reducers/UsersReducer/users-reducer';
+import {AuthActionType, authReducer} from '../reducers/AuthReducer/auth-reducer';
 
 export type ActionsType = ProfileActionType | DialogsActionType | UserActionType | AuthActionType
 

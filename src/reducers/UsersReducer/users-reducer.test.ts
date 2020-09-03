@@ -1,11 +1,11 @@
-import {v1} from 'uuid';
-import usersReducer, {
+import {
     follow,
-    unFollow,
-    setUsers,
+    InitialStateType,
     setCurrentPage,
     setTotalCount,
-    InitialStateType, toogleIsFetching
+    setUsers,
+    toogleIsFetching,
+    unFollow, usersReducer
 } from './users-reducer';
 
 
