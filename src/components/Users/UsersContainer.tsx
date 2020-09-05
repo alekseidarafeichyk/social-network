@@ -5,7 +5,7 @@ import {
     followAC,
     setCurrentPageAC,
     setTotalCountAC,
-    setUsersAC,
+    setUsersAC, toogleFollowingProgressAC,
     toogleIsFetchingAC,
     unFollowAC,
     UsersType
@@ -21,12 +21,14 @@ type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress : Array<number>
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalCount: (totalCount: number) => void
     toogleIsFetching: (value: boolean) => void
+    toogleFollowingProgress : (isFetching : boolean, userId: number ) => void
 }
 
 class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
@@ -54,8 +56,6 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
     render() {
         return <>
             {this.props.isFetching ? <CircularProgress disableShrink/> : null}
-
-
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
@@ -64,6 +64,8 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
                 userPage={this.props.userPage}
                 follow={this.props.follow}
                 unFollow={this.props.unFollow}
+                followingInProgress={this.props.followingInProgress}
+                toogleFollowingProgress={this.props.toogleFollowingProgress}
             />
         </>
     }
@@ -76,6 +78,7 @@ let mapStateToProps = (state: RootState) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress : state.usersPage.followingInProgress
     }
 }
 
@@ -85,7 +88,8 @@ let UsersContainer = connect(mapStateToProps, {
     setUsers: setUsersAC,
     setCurrentPage: setCurrentPageAC,
     setTotalCount: setTotalCountAC,
-    toogleIsFetching: toogleIsFetchingAC
+    toogleIsFetching: toogleIsFetchingAC,
+    toogleFollowingProgress: toogleFollowingProgressAC
 })(UsersFCComponent)
 
 export default UsersContainer

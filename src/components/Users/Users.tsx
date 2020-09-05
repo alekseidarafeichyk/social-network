@@ -9,10 +9,12 @@ type UsersPropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
+    followingInProgress : Array<number>
     onPageChanged: (currentPage: number) => void
     userPage: Array<UsersType>
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    toogleFollowingProgress : (isFetching : boolean, userId : number) => void
 }
 
 function Users(props: UsersPropsType) {
@@ -55,22 +57,25 @@ function Users(props: UsersPropsType) {
                         </div>
                         <div className={styles.btnWrap}>
                             {us.followed ?
-                                <button className={styles.btnMode} onClick={() => {
+                                <button disabled={props.followingInProgress.some(id => id === us.id) } className={styles.btnMode} onClick={() => {
+                                    props.toogleFollowingProgress(true, us.id)
                                    usersAPI.unFollowUser(us.id)
                                         .then(data => {
                                             if (data.resultCode === 0) {
-                                                debugger
                                                 props.unFollow(us.id)
                                             }
+                                            props.toogleFollowingProgress(false, us.id)
+
                                         })
                                 }}>Unfollowed</button> :
-                                <button className={styles.btnMode} onClick={() => {
+                                <button disabled={props.followingInProgress.some(id => id === us.id) } className={styles.btnMode} onClick={() => {
+                                    props.toogleFollowingProgress(true, us.id)
                                     usersAPI.followUser(us.id)
                                         .then(data => {
                                             if (data.resultCode === 0) {
-                                                debugger
                                                 props.follow(us.id)
                                             }
+                                            props.toogleFollowingProgress(false, us.id)
                                         })
                                 }}>Followed</button>
                             }

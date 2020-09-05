@@ -28,24 +28,3 @@ export const usersAPI = {
             .then(response => response.data)
     },
 }
-
-// export const getUsers = (currentPage = 1,pageSize = 10) => {
-//     return instance.get( `users?page=${currentPage}&count=${pageSize}`,
-//         {withCredentials: true})
-//         .then(response => response.data)
-// }
-
-// export const getUserProfile = (userId = '') => {
-//     return instance.get(`profile/` + userId)
-//         .then(response => response.data)
-// }
-
-// export const unFollowUser = (userId: number) => {
-//     return instance.delete(`follow/` + userId)
-//         .then(response => response.data)
-// }
-
-// export const followUser = (userId: number) => {
-//     return instance.post(`follow/` + userId)
-//         .then(response => response.data)
-// }
