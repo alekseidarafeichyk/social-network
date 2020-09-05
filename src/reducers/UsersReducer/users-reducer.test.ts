@@ -1,21 +1,17 @@
 import {
-    follow,
-    InitialStateType,
-    setCurrentPage,
-    setTotalCount,
-    setUsers,
-    toogleIsFetching,
-    unFollow, usersReducer
+    followAC,
+    UsersStateType, setCurrentPageAC, setTotalCountAC, setUsersAC, toogleIsFetchingAC,
+    unFollowAC, usersReducer
 } from './users-reducer';
 
 
-let startState : InitialStateType;
+let startState: UsersStateType;
 
 beforeEach(() => {
     startState = {
         users: [
             {
-                name: "zidane24",
+                name: 'zidane24',
                 id: 1,
                 uniqueUrlName: null,
                 photos: {
@@ -26,7 +22,7 @@ beforeEach(() => {
                 followed: true,
             },
             {
-                name: "Vitaliy_Kormylo",
+                name: 'Vitaliy_Kormylo',
                 id: 2,
                 uniqueUrlName: null,
                 photos: {
@@ -37,7 +33,7 @@ beforeEach(() => {
                 followed: false,
             },
             {
-                name: "vahe11",
+                name: 'vahe11',
                 id: 3,
                 uniqueUrlName: null,
                 photos: {
@@ -48,7 +44,7 @@ beforeEach(() => {
                 followed: false,
             },
             {
-                name: "AlexKhvorov",
+                name: 'AlexKhvorov',
                 id: 4,
                 uniqueUrlName: null,
                 photos: {
@@ -67,7 +63,7 @@ beforeEach(() => {
 })
 
 test('one of the users should change false to true', () => {
-    let action = follow(3)
+    let action = followAC(3)
 
     let endState = usersReducer(startState, action)
 
@@ -75,63 +71,8 @@ test('one of the users should change false to true', () => {
     expect(endState.users[2].followed).toBeTruthy()
 })
 
-beforeEach(() => {
-    startState = {
-        users: [
-            {
-                name: "zidane24",
-                id: 1,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: true,
-            },
-            {
-                name: "Vitaliy_Kormylo",
-                id: 2,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "vahe11",
-                id: 3,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "AlexKhvorov",
-                id: 4,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-        ],
-        pageSize: 5,
-        totalUsersCount: 15,
-        currentPage: 3,
-        isFetching: false,
-    }
-})
-
 test('one of the users should change true to false', () => {
-    let action = unFollow(1)
+    let action = unFollowAC(1)
 
     let endState = usersReducer(startState, action)
 
@@ -139,67 +80,12 @@ test('one of the users should change true to false', () => {
     expect(endState.users[0].followed).toBeFalsy()
 })
 
-beforeEach(() => {
-    startState = {
-        users: [
-            {
-                name: "zidane24",
-                id: 1,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: true,
-            },
-            {
-                name: "Vitaliy_Kormylo",
-                id: 2,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "vahe11",
-                id: 3,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "AlexKhvorov",
-                id: 4,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-        ],
-        pageSize: 5,
-        totalUsersCount: 15,
-        currentPage: 3,
-        isFetching: false,
-    }
-})
-
 
 test('users should be added to the user array', () => {
 
     let newUsers = [
         {
-            name: "zidane24",
+            name: 'zidane24',
             id: 1,
             uniqueUrlName: null,
             photos: {
@@ -210,7 +96,7 @@ test('users should be added to the user array', () => {
             followed: false,
         },
         {
-            name: "Vitaliy_Kormylo",
+            name: 'Vitaliy_Kormylo',
             id: 2,
             uniqueUrlName: null,
             photos: {
@@ -221,7 +107,7 @@ test('users should be added to the user array', () => {
             followed: false,
         },
         {
-            name: "vahe11",
+            name: 'vahe11',
             id: 3,
             uniqueUrlName: null,
             photos: {
@@ -232,7 +118,7 @@ test('users should be added to the user array', () => {
             followed: false,
         },
         {
-            name: "AlexKhvorov",
+            name: 'AlexKhvorov',
             id: 4,
             uniqueUrlName: null,
             photos: {
@@ -244,70 +130,15 @@ test('users should be added to the user array', () => {
         },
     ]
 
-    let action = setUsers(newUsers)
+    let action = setUsersAC(newUsers)
 
     let endState = usersReducer(startState, action)
 
     expect(endState.users.length).toBe(4)
 })
 
-beforeEach(() => {
-    startState = {
-        users: [
-            {
-                name: "zidane24",
-                id: 1,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: true,
-            },
-            {
-                name: "Vitaliy_Kormylo",
-                id: 2,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "vahe11",
-                id: 3,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "AlexKhvorov",
-                id: 4,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-        ],
-        pageSize: 5,
-        totalUsersCount: 15,
-        currentPage: 3,
-        isFetching: false,
-    }
-})
-
 test('should change the page number', () => {
-    let action = setCurrentPage(4)
+    let action = setCurrentPageAC(4)
 
     let endState = usersReducer(startState, action)
 
@@ -315,63 +146,8 @@ test('should change the page number', () => {
     expect(endState.currentPage).toBe(4)
 })
 
-beforeEach(() => {
-    startState = {
-        users: [
-            {
-                name: "zidane24",
-                id: 1,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: true,
-            },
-            {
-                name: "Vitaliy_Kormylo",
-                id: 2,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "vahe11",
-                id: 3,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "AlexKhvorov",
-                id: 4,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-        ],
-        pageSize: 5,
-        totalUsersCount: 15,
-        currentPage: 3,
-        isFetching: false,
-    }
-})
-
 test('should change the number of pages', () => {
-    let action = setTotalCount(4)
+    let action = setTotalCountAC(4)
 
     let endState = usersReducer(startState, action)
 
@@ -379,63 +155,8 @@ test('should change the number of pages', () => {
     expect(endState.totalUsersCount).toBe(4)
 })
 
-beforeEach(() => {
-    startState = {
-        users: [
-            {
-                name: "zidane24",
-                id: 1,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: true,
-            },
-            {
-                name: "Vitaliy_Kormylo",
-                id: 2,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "vahe11",
-                id: 3,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-            {
-                name: "AlexKhvorov",
-                id: 4,
-                uniqueUrlName: null,
-                photos: {
-                    small: null,
-                    large: null,
-                },
-                status: null,
-                followed: false,
-            },
-        ],
-        pageSize: 5,
-        totalUsersCount: 15,
-        currentPage: 3,
-        isFetching: false,
-    }
-})
-
 test('should change isFetching', () => {
-    let action = toogleIsFetching(true)
+    let action = toogleIsFetchingAC(true)
 
     let endState = usersReducer(startState, action)
 

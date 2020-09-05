@@ -3,7 +3,7 @@ import styles from './Users.module.css'
 import userPhoto from '../../assets/images/user.png';
 import {UsersType} from '../../reducers/UsersReducer/users-reducer';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
+import {usersAPI} from '../../api/api';
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -55,28 +55,20 @@ function Users(props: UsersPropsType) {
                         </div>
                         <div className={styles.btnWrap}>
                             {us.followed ?
-                                    <button className={styles.btnMode} onClick={() => {
-                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {
-                                            withCredentials: true,
-                                            headers : {
-                                                'API-KEY' : '628f1297-6b8a-455c-a591-d2e75c4bd3a6'
+                                <button className={styles.btnMode} onClick={() => {
+                                   usersAPI.unFollowUser(us.id)
+                                        .then(data => {
+                                            if (data.resultCode === 0) {
+                                                debugger
+                                                props.unFollow(us.id)
                                             }
                                         })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    props.unFollow(us.id)
-                                                }
-                                            })
-                                       }}>Unfollowed</button> :
+                                }}>Unfollowed</button> :
                                 <button className={styles.btnMode} onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {},{
-                                        withCredentials: true,
-                                        headers : {
-                                            'API-KEY' : '628f1297-6b8a-455c-a591-d2e75c4bd3a6'
-                                        }
-                                    })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
+                                    usersAPI.followUser(us.id)
+                                        .then(data => {
+                                            if (data.resultCode === 0) {
+                                                debugger
                                                 props.follow(us.id)
                                             }
                                         })

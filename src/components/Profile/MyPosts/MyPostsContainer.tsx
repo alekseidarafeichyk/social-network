@@ -1,5 +1,5 @@
 import React from "react";
-import {addPost, onPostChange} from "../../../reducers/profile-reducer";
+import {addPostAC, onPostChangeAC} from "../../../reducers/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from 'react-redux';
 import {RootState} from '../../../redux/redux-store';
@@ -13,11 +13,11 @@ let mapStateToProps = (state: RootState) => {
 let mapDispatchToProps = (dispatch: any) => {
     return {
         onPostChange : (letter: string) => {
-            let action = onPostChange(letter)
+            let action = onPostChangeAC(letter)
             dispatch(action)
         },
         addPost : (text:string) => {
-            let action = addPost(text)
+            let action = addPostAC(text)
             dispatch(action)
         }
     }

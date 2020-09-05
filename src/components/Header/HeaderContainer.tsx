@@ -3,7 +3,7 @@ import Header from './Header';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {setUserData, InitialAuthStateType} from '../../reducers/AuthReducer/auth-reducer';
+import {setUserData, AuthStateType} from '../../reducers/AuthReducer/auth-reducer';
 
 
 type MapDispatchPropsType = {
@@ -11,7 +11,7 @@ type MapDispatchPropsType = {
 }
 
 export type MapStatePropsType = {
-    auth: InitialAuthStateType
+    auth: AuthStateType
 }
 
 type HeaderContainerPropsType = MapDispatchPropsType & MapStatePropsType

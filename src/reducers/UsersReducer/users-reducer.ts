@@ -5,7 +5,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
-export let InitialState: InitialStateType = {
+export let InitialState: UsersStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
@@ -13,7 +13,7 @@ export let InitialState: InitialStateType = {
     isFetching: true
 }
 
-export type InitialStateType = {
+export type UsersStateType = {
     users: Array<UsersType>
     pageSize: number
     totalUsersCount: number
@@ -40,40 +40,15 @@ type Location = {
     city: string
 }
 
-export type UserActionType = FollowType | UnFollowType | SetUsersType | SetCurrentPageType | SetTotalCountType | ToggleIsFetchingType;
+export type UserActionType =
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unFollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
+    | ReturnType<typeof toogleIsFetchingAC>
 
-type FollowType = {
-    type: typeof FOLLOW
-    userId: number
-}
-
-type UnFollowType = {
-    type: typeof UNFOLLOW
-    userId: number
-}
-
-type SetUsersType = {
-    type: typeof SET_USERS
-    users: Array<UsersType>
-}
-
-type SetCurrentPageType = {
-    type: typeof SET_CURRENT_PAGE
-    currentPage: number
-}
-
-type SetTotalCountType = {
-    type: typeof SET_TOTAL_COUNT
-    totalCount: number
-}
-
-type ToggleIsFetchingType = {
-    type: typeof TOGGLE_IS_FETCHING
-    value: boolean
-}
-
-
-export const usersReducer = (state = InitialState, action: UserActionType): InitialStateType => {
+export const usersReducer = (state = InitialState, action: UserActionType): UsersStateType => {
     switch (action.type) {
         case FOLLOW :
             return {
@@ -114,13 +89,16 @@ export const usersReducer = (state = InitialState, action: UserActionType): Init
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching : action.value}
         default :
-            return {...state}
+            return state
     }
 };
 
-export const follow = (userId: number) =>  ({type:  FOLLOW as  typeof FOLLOW, userId})
-export const unFollow = (userId: number) => ({type: UNFOLLOW as  typeof UNFOLLOW, userId})
-export const setUsers = (users: Array<UsersType>) => ({type: SET_USERS as  typeof SET_USERS, users})
-export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE as  typeof SET_CURRENT_PAGE, currentPage})
-export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT as  typeof SET_TOTAL_COUNT, totalCount})
-export const toogleIsFetching = (value: boolean) => ({type: TOGGLE_IS_FETCHING as  typeof TOGGLE_IS_FETCHING, value})
+
+export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
+export const unFollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
+export const setUsersAC = (users: Array<UsersType>) => ({type: SET_USERS, users} as const)
+export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalCountAC = (totalCount: number) => ({type: SET_TOTAL_COUNT, totalCount} as const)
+export const toogleIsFetchingAC = (value: boolean) => ({type: TOGGLE_IS_FETCHING, value} as const)
+
+

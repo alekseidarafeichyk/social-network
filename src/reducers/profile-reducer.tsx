@@ -6,7 +6,7 @@ const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
 
-type InitialStateType = {
+type ProfileStateType = {
     posts: Array<PostType>,
     newPostText: string,
     profile: null | ProfileType
@@ -38,7 +38,7 @@ type PhotosType = {
     large: string
 }
 
-const initialState: InitialStateType = {
+const initialState: ProfileStateType = {
     posts: [
         {id: v1(), message: 'Hi', likeCounts: 25},
         {id: v1(), message: 'Hello', likeCounts: 20},
@@ -47,25 +47,13 @@ const initialState: InitialStateType = {
     profile: null
 }
 
-export type ProfileActionType = UpdatePostActionType | AddPostActionType | SetUserProfile
+export type ProfileActionType =
+    | ReturnType<typeof onPostChangeAC>
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof setUserProfileAC>
 
-export type UpdatePostActionType = {
-    type: typeof UPDATE_POST
-    newText: string
-}
-
-export type AddPostActionType = {
-    type: typeof ADD_POST
-    postText: string
-}
-
-export type SetUserProfile = {
-    type: typeof SET_USER_PROFILE
-    profile: null
-}
-
-const profileReducer = (state
-                            = initialState, action: ProfileActionType): InitialStateType => {
+export const profileReducer = (state
+                            = initialState, action: ProfileActionType): ProfileStateType => {
     switch (action.type) {
         case UPDATE_POST:
             return {...state, newPostText: action.newText}
@@ -88,10 +76,6 @@ const profileReducer = (state
     }
 }
 
-export const onPostChange = (letter: string) => ({type: UPDATE_POST, newText: letter})
-
-export const addPost = (text: string) => ({type: ADD_POST, postText: text})
-
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile})
-
-export default profileReducer;
+export const onPostChangeAC = (letter: string) => ({type: UPDATE_POST, newText: letter} as const)
+export const addPostAC = (text: string) => ({type: ADD_POST, postText: text} as const)
+export const setUserProfileAC = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)

@@ -1,12 +1,12 @@
-import {authReducer, InitialAuthStateType, setUserData} from './auth-reducer';
+import {authReducer, AuthStateType, setUserData} from './auth-reducer';
 
-let startState: InitialAuthStateType
+let startState: AuthStateType
 beforeEach(() => {
     startState = {
         id: 2,
         email: '@it-kamasutra.com',
         login: 'Dimych',
-        isFetching: false
+        isAuth: false
     }
 })
 
@@ -16,10 +16,7 @@ test('all values must change', () => {
 
     let endState = authReducer(startState, action)
 
-    // expect(startState.id).toBe(2)
     expect(endState.id).toBe(4)
-    // expect(startState.email).toBe('@it-kamasutra.com')
     expect(endState.email).toBe('detox@gmail.com')
-    // expect(startState.login).toBe('Dimych')
     expect(endState.login).toBe('Alesha')
 })

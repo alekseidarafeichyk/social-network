@@ -2,17 +2,17 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
 import {
-    follow,
-    setCurrentPage,
-    setTotalCount,
-    setUsers, toogleIsFetching,
-    unFollow,
+    followAC,
+    setCurrentPageAC,
+    setTotalCountAC,
+    setUsersAC,
+    toogleIsFetchingAC,
+    unFollowAC,
     UsersType
 } from '../../reducers/UsersReducer/users-reducer';
-import axios from 'axios';
 import Users from './Users';
-import styles from './UsersContainer.module.css'
 import {CircularProgress} from '@material-ui/core';
+import {usersAPI} from '../../api/api';
 
 
 type UsersPropsType = {
@@ -33,21 +33,21 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     componentDidMount() {
         this.props.toogleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toogleIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.setTotalCount(data.totalCount)
             });
     }
 
     onPageChanged = (currentPage: number) => {
         this.props.toogleIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toogleIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
@@ -79,7 +79,14 @@ let mapStateToProps = (state: RootState) => {
     }
 }
 
-let UsersContainer = connect(mapStateToProps, {follow, unFollow,setUsers, setCurrentPage, setTotalCount, toogleIsFetching})(UsersFCComponent)
+let UsersContainer = connect(mapStateToProps, {
+    follow: followAC,
+    unFollow: unFollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalCount: setTotalCountAC,
+    toogleIsFetching: toogleIsFetchingAC
+})(UsersFCComponent)
 
 export default UsersContainer
 

@@ -1,17 +1,16 @@
 import {DialogType, MessageType} from '../redux/store';
 import {v1} from 'uuid';
-import {ActionsType} from '../redux/redux-store';
 
 const UPDATE_MESSAGE = 'Update-Message'
 const ADD_MESSAGE = 'Add-Message'
 
-type InitialState = {
+type DialogsStateType = {
     dialogs: Array<DialogType>,
     messages: Array<MessageType>,
     newMessageText: string,
 }
 
-let initialState: InitialState = {
+let initialState: DialogsStateType = {
     dialogs: [
         {id: v1(), name: 'Alex'},
         {id: v1(), name: 'Dima'},
@@ -28,17 +27,9 @@ let initialState: InitialState = {
     newMessageText: '',
 }
 
-export type DialogsActionType = UpdateMessageActionType | AddMessageActionType
-
-export type UpdateMessageActionType = {
-    type: typeof UPDATE_MESSAGE
-    newMessage: string
-}
-
-export type AddMessageActionType = {
-    type: typeof ADD_MESSAGE
-    messageText: string
-}
+export type  DialogsActionType =
+    | ReturnType<typeof onMessageChangeAC>
+    | ReturnType<typeof addMessageAC>
 
 
 export const dialogsReducer = (state = initialState, action: DialogsActionType) => {
@@ -67,6 +58,6 @@ export const dialogsReducer = (state = initialState, action: DialogsActionType) 
     }
 }
 
-export const onMessageChangeActionCreator = (text: string) => ({type: UPDATE_MESSAGE, newMessage: text})
-export const addMessageActionCreator = (text: string) => ({type: ADD_MESSAGE, messageText: text})
+export const onMessageChangeAC = (text: string) => ({type: UPDATE_MESSAGE, newMessage: text} as const)
+export const addMessageAC = (text: string) => ({type: ADD_MESSAGE, messageText: text} as const)
 
