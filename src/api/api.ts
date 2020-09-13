@@ -15,7 +15,7 @@ export const usersAPI = {
             {withCredentials: true})
             .then(response => response.data)
     },
-    getUserProfile(userId = '') {
+    getUserProfile(userId = '9442') {
         return instance.get(`profile/` + userId)
             .then(response => response.data)
     },
@@ -27,4 +27,10 @@ export const usersAPI = {
         return instance.delete(`follow/` + userId)
             .then(response => response.data)
     },
+}
+
+export const authAPI = {
+    me() {
+        return instance.get(`auth/me`)
+    }
 }

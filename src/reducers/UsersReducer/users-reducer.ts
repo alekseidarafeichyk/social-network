@@ -87,7 +87,7 @@ export const usersReducer = (state = InitialState, action: UserActionType): User
             return {...state, totalUsersCount: action.totalCount}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.value}
-        case 'TOGGLE_FOLLOWING_PROGRESS': {
+        case TOGGLE_FOLLOWING_PROGRESS: {
             return {
                 ...state,
                 followingInProgress : action.isFetching ?

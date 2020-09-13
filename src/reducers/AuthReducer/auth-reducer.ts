@@ -1,3 +1,6 @@
+import {authAPI} from '../../api/api';
+import { Dispatch } from 'react';
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 export type AuthStateType = {
@@ -36,6 +39,22 @@ export const setUserDataAC = (userId: number, email: string, login: string): Set
         userId,
         email,
         login,
+    }
+}
+
+type DispatchGetAuthUserData = Dispatch<AuthActionType>
+
+
+export const getAuthUserData = () => {
+    return (dispatch : DispatchGetAuthUserData) => {
+        debugger
+        authAPI.me()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    let {id, login, email} = response.data.data
+                    dispatch(setUserDataAC(id, login, email))
+                }
+            });
     }
 }
 

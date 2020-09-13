@@ -3,7 +3,6 @@ import styles from './Users.module.css'
 import userPhoto from '../../assets/images/user.png';
 import {UsersType} from '../../reducers/UsersReducer/users-reducer';
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from '../../api/api';
 
 type UsersPropsType = {
     totalUsersCount: number

@@ -2,14 +2,13 @@ import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {ProfileType, setUserProfileAC} from '../../reducers/profile-reducer';
+import {getUserProfile, ProfileType} from '../../reducers/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router';
-import {usersAPI} from '../../api/api';
 
 type ProfileContainerPropsType = ProfileDetailParams & OwnPropsType
 
 type MapStatePropsType = {
-    setUserProfile: (profile: ProfileType)=>void
+    getUserProfile: (userId : string)=>void
 }
 
 type MapDispatchPropsType = {
@@ -21,10 +20,10 @@ type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 class ProfileContainer extends React.Component<ProfileContainerPropsType, RootState> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        usersAPI.getUserProfile(userId)
-            .then(data => {
-                this.props.setUserProfile(data)
-            })
+        if (!userId) {
+            userId = '9442';
+        }
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -50,4 +49,4 @@ type ProfileDetailParams = RouteComponentProps<PathParamsType>
 
 let withUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps,  {setUserProfile: setUserProfileAC})(withUrlDataContainerComponent);
+export default connect(mapStateToProps,  {getUserProfile})(withUrlDataContainerComponent);

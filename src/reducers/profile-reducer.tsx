@@ -1,5 +1,7 @@
 import {PostType} from '../redux/store';
 import {v1} from 'uuid'
+import {Dispatch} from 'react';
+import {usersAPI} from '../api/api';
 
 const UPDATE_POST = 'UPDATE_POST'
 const ADD_POST = 'ADD_POST'
@@ -79,3 +81,15 @@ export const profileReducer = (state
 export const onPostChangeAC = (letter: string) => ({type: UPDATE_POST, newText: letter} as const)
 export const addPostAC = (text: string) => ({type: ADD_POST, postText: text} as const)
 export const setUserProfileAC = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
+
+type DispatchGetUserProfile = Dispatch<ProfileActionType>
+
+export const getUserProfile = (userId : string) => {
+    return (dispatch : DispatchGetUserProfile) => {
+
+        usersAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfileAC(data))
+            })
+    }
+}

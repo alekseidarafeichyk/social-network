@@ -5,8 +5,6 @@ import { NavLink } from "react-router-dom";
 import classes from '../Navbar/Navbar.module.css';
 import {MapStatePropsType} from './HeaderContainer';
 
-
-
 function Header(props: MapStatePropsType) {
     return (
         <header className={style.header}>

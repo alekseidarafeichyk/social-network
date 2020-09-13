@@ -9,7 +9,10 @@ type ProfileInfoPropsType = {
 
 function ProfileInfo(props: ProfileInfoPropsType) {
     if (!props.profile) {
-        return <CircularProgress disableShrink/>
+        return <CircularProgress
+            disableShrink
+            size={100}
+        />
     }
     return (
         <div>

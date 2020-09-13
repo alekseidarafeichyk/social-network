@@ -38,7 +38,10 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     render() {
         return <>
-            {this.props.isFetching ? <CircularProgress disableShrink/> : null}
+            {this.props.isFetching ? <CircularProgress
+                disableShrink
+                size={100}
+            /> : null}
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
