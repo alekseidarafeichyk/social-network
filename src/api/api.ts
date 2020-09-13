@@ -19,12 +19,12 @@ export const usersAPI = {
         return instance.get(`profile/` + userId)
             .then(response => response.data)
     },
-    unFollowUser(userId: number) {
-        return instance.delete(`follow/` + userId)
-            .then(response => response.data)
-    },
     followUser (userId: number) {
         return instance.post(`follow/` + userId)
+            .then(response => response.data)
+    },
+    unFollowUser(userId: number) {
+        return instance.delete(`follow/` + userId)
             .then(response => response.data)
     },
 }

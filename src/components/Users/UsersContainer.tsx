@@ -2,17 +2,15 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
 import {
-    followAC,
+    followUserThunk,
+    getUsers,
     setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC, toogleFollowingProgressAC,
-    toogleIsFetchingAC,
-    unFollowAC,
+    toogleFollowingProgressAC,
+    unFollowUserThunk,
     UsersType
 } from '../../reducers/UsersReducer/users-reducer';
 import Users from './Users';
 import {CircularProgress} from '@material-ui/core';
-import {usersAPI} from '../../api/api';
 
 
 type UsersPropsType = {
@@ -21,36 +19,21 @@ type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress : Array<number>
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (users: Array<UsersType>) => void
+    followingInProgress: Array<number>
     setCurrentPage: (currentPage: number) => void
-    setTotalCount: (totalCount: number) => void
-    toogleIsFetching: (value: boolean) => void
-    toogleFollowingProgress : (isFetching : boolean, userId: number ) => void
+    getUsers : (currentPage: number, pageSize : number) => void
+    unFollowUser : (userID : number) => void
+    followUser : (userID : number) => void
 }
 
 class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
 
     componentDidMount() {
-        this.props.toogleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toogleIsFetching(false)
-                this.props.setUsers(data.items)
-                this.props.setTotalCount(data.totalCount)
-            });
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (currentPage: number) => {
-        this.props.toogleIsFetching(true)
-        this.props.setCurrentPage(currentPage)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toogleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsers(currentPage, this.props.pageSize)
     }
 
     render() {
@@ -60,12 +43,11 @@ class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
-                onPageChanged={this.onPageChanged}
                 userPage={this.props.userPage}
-                follow={this.props.follow}
-                unFollow={this.props.unFollow}
+                onPageChanged={this.onPageChanged}
                 followingInProgress={this.props.followingInProgress}
-                toogleFollowingProgress={this.props.toogleFollowingProgress}
+                unFollowUser={this.props.unFollowUser}
+                followUser={this.props.followUser}
             />
         </>
     }
@@ -78,18 +60,15 @@ let mapStateToProps = (state: RootState) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress : state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
 let UsersContainer = connect(mapStateToProps, {
-    follow: followAC,
-    unFollow: unFollowAC,
-    setUsers: setUsersAC,
     setCurrentPage: setCurrentPageAC,
-    setTotalCount: setTotalCountAC,
-    toogleIsFetching: toogleIsFetchingAC,
-    toogleFollowingProgress: toogleFollowingProgressAC
+    getUsers : getUsers,
+    unFollowUser : unFollowUserThunk,
+    followUser : followUserThunk
 })(UsersFCComponent)
 
 export default UsersContainer

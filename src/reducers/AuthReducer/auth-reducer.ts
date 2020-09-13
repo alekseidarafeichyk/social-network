@@ -30,7 +30,7 @@ export const authReducer = (state: AuthStateType = InitialState, action: AuthAct
     }
 }
 
-export const setUserData = (userId: number, email: string, login: string): SetUserDataACType => {
+export const setUserDataAC = (userId: number, email: string, login: string): SetUserDataACType => {
     return {
         type: SET_USER_DATA,
         userId,

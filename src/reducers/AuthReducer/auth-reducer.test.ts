@@ -1,4 +1,4 @@
-import {authReducer, AuthStateType, setUserData} from './auth-reducer';
+import {authReducer, AuthStateType, setUserDataAC} from './auth-reducer';
 
 let startState: AuthStateType
 beforeEach(() => {
@@ -12,7 +12,7 @@ beforeEach(() => {
 
 
 test('all values must change', () => {
-    let action = setUserData(4, 'detox@gmail.com', 'Alesha',)
+    let action = setUserDataAC(4, 'detox@gmail.com', 'Alesha',)
 
     let endState = authReducer(startState, action)
 

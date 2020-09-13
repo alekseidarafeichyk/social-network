@@ -48,7 +48,6 @@ type PathParamsType = {
 
 type ProfileDetailParams = RouteComponentProps<PathParamsType>
 
-
 let withUrlDataContainerComponent = withRouter(ProfileContainer)
 
 export default connect(mapStateToProps,  {setUserProfile: setUserProfileAC})(withUrlDataContainerComponent);
