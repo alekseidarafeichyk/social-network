@@ -47,7 +47,6 @@ type DispatchGetAuthUserData = Dispatch<AuthActionType>
 
 export const getAuthUserData = () => {
     return (dispatch : DispatchGetAuthUserData) => {
-        debugger
         authAPI.me()
             .then(response => {
                 if (response.data.resultCode === 0) {

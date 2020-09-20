@@ -6,7 +6,8 @@ import {RootState} from '../../redux/redux-store';
 
 let mapState = (state: RootState) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth,
     }
 }
 
