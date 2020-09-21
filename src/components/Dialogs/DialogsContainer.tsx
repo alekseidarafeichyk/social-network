@@ -3,6 +3,8 @@ import {addMessageAC, onMessageChangeAC} from '../../reducers/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
+import {Redirect} from 'react-router';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 let mapState = (state: RootState) => {
     return {
@@ -25,6 +27,9 @@ let mapDispatch = (dispatch: any) => {
 
 }
 
-let DialogsContainer = connect(mapState,mapDispatch)(Dialogs)
+const AuthRedirectComponent = WithAuthRedirect(Dialogs)
+
+
+let DialogsContainer = connect(mapState,mapDispatch)(AuthRedirectComponent)
 
 export default DialogsContainer;
