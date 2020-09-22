@@ -5,12 +5,13 @@ import {
     followUserThunk,
     getUsers,
     setCurrentPageAC,
-    toogleFollowingProgressAC,
     unFollowUserThunk,
     UsersType
 } from '../../reducers/UsersReducer/users-reducer';
 import Users from './Users';
 import {CircularProgress} from '@material-ui/core';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {compose} from 'redux';
 
 
 type UsersPropsType = {
@@ -26,7 +27,7 @@ type UsersPropsType = {
     followUser : (userID : number) => void
 }
 
-class UsersFCComponent extends React.Component<UsersPropsType, RootState> {
+class UsersContainer extends React.Component<UsersPropsType, RootState> {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
@@ -67,14 +68,13 @@ let mapStateToProps = (state: RootState) => {
     }
 }
 
-
-
-let UsersContainer = connect(mapStateToProps, {
+export default compose<React.ComponentType>(
+    WithAuthRedirect,
+    connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     getUsers : getUsers,
     unFollowUser : unFollowUserThunk,
     followUser : followUserThunk
-})(UsersFCComponent)
+}))(UsersContainer)
 
-export default UsersContainer
 

@@ -1,6 +1,7 @@
 import React from "react";
-import s from './ProfileInfo.module.css';
+import style from './ProfileInfo.module.css';
 import {CircularProgress} from '@material-ui/core';
+import { ProfileStatus } from "./ProfileStatus";
 
 
 type ProfileInfoPropsType = {
@@ -8,6 +9,7 @@ type ProfileInfoPropsType = {
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
+    debugger
     if (!props.profile) {
         return <CircularProgress
             disableShrink
@@ -16,10 +18,11 @@ function ProfileInfo(props: ProfileInfoPropsType) {
     }
     return (
         <div>
-            <div className={s.img}>
-                <img src="https://bipbap.ru/wp-content/uploads/2017/06/1-13.jpg" alt=""/>
+            <div className={style.img}>
+                {/*<img src="https://bipbap.ru/wp-content/uploads/2017/06/1-13.jpg" alt=""/>*/}
+                <ProfileStatus/>
             </div>
-            <div className={s.descriptionBlock}>
+            <div className={style.descriptionBlock}>
                 <img src={props.profile.photos.large} alt=""/>
                 ava+description
             </div>
