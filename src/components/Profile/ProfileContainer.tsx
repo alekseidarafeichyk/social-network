@@ -2,37 +2,53 @@ import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {getUserProfile, ProfileType} from '../../reducers/profile-reducer';
+import {changeUserStatus, getUserProfile, getUserStatus, ProfileType} from '../../reducers/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {compose} from 'redux';
 
-type ProfileContainerPropsType = ProfileDetailParams & OwnPropsType
+
 
 type MapStatePropsType = {
-    getUserProfile: (userId: string) => void,
+    profile: ProfileType | null
+    status: string
 }
 
 type MapDispatchPropsType = {
-    profile: ProfileType | null
+    getUserProfile: (userId: string) => void
+    getUserStatus: (userId: string) => void
+    changeUserStatus: (newStatus: string) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 
+type PathParamsType = {
+    userId: string
+}
+
+type ProfileDetailParams = RouteComponentProps<PathParamsType>
+
+type ProfileContainerPropsType = ProfileDetailParams & OwnPropsType
+
+
 class ProfileContainer extends React.Component<ProfileContainerPropsType, RootState> {
 
     componentDidMount() {
-    debugger
+        debugger
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = '9442';
         }
-        this.props.getUserProfile(userId)
+        this.props.getUserProfile(userId);
+        this.props.getUserStatus(userId)
     }
 
     render() {
         return (
             <div>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile}
+                         status={this.props.status}
+                         changeUserStatus={this.props.changeUserStatus}
+                />
             </div>
         );
     }
@@ -41,16 +57,11 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, RootSt
 const mapStateToProps = (state: RootState) => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 
-type PathParamsType = {
-    userId: string
-}
-
-type ProfileDetailParams = RouteComponentProps<PathParamsType>
-
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile}),
+    connect(mapStateToProps, {getUserProfile,getUserStatus, changeUserStatus}),
     withRouter,
 )(ProfileContainer)

@@ -5,13 +5,17 @@ import {ProfileType} from '../../reducers/profile-reducer';
 
 type ProfilePropstType = {
     profile: ProfileType | null
+    status: string
+    changeUserStatus: (newStatus: string) => void
 }
 
 function Profile(props: ProfilePropstType) {
-    debugger
     return (
         <div>
-            <ProfileInfo profile={props.profile} />
+            <ProfileInfo profile={props.profile}
+                         status={props.status}
+                         changeUserStatus={props.changeUserStatus}
+            />
             <MyPostsContainer/>
         </div>
     );
