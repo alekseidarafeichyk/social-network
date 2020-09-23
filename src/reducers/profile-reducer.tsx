@@ -91,7 +91,6 @@ export const profileReducer = (state
             }
         }
         case CHANGE_STATUS:
-            debugger
             return {
                 ...state,
                 status: action.newStatus

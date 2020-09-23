@@ -7,7 +7,6 @@ import {RouteComponentProps, withRouter} from 'react-router';
 import {compose} from 'redux';
 
 
-
 type MapStatePropsType = {
     profile: ProfileType | null
     status: string
@@ -33,7 +32,6 @@ type ProfileContainerPropsType = ProfileDetailParams & OwnPropsType
 class ProfileContainer extends React.Component<ProfileContainerPropsType, RootState> {
 
     componentDidMount() {
-        debugger
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = '9442';
@@ -62,6 +60,6 @@ const mapStateToProps = (state: RootState) => {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile,getUserStatus, changeUserStatus}),
+    connect(mapStateToProps, {getUserProfile, getUserStatus, changeUserStatus}),
     withRouter,
 )(ProfileContainer)

@@ -1,10 +1,9 @@
-import React from "react";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {ProfileType} from '../../reducers/profile-reducer';
+import React from 'react';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 type ProfilePropstType = {
-    profile: ProfileType | null
+    profile: any
     status: string
     changeUserStatus: (newStatus: string) => void
 }

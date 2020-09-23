@@ -1,8 +1,6 @@
 import React, {ChangeEvent} from 'react';
 
 
-
-
 export class ProfileStatus extends React.Component<any, any> {
 
     state = {
@@ -12,25 +10,37 @@ export class ProfileStatus extends React.Component<any, any> {
 
     onEditMode = () => {
         this.setState({
-            editMode : !this.state.editMode
+            editMode: !this.state.editMode
         })
     }
 
     offEditMode = () => {
         this.setState({
-            editMode : !this.state.editMode
+            editMode: !this.state.editMode
         })
         this.props.changeUserStatus(this.state.status)
     }
 
-    onChangeStatusText = (e : ChangeEvent<HTMLInputElement>) => {
+    onChangeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
-                status : e.currentTarget.value
+                status: e.currentTarget.value
             }
         )
     }
 
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any) {
+
+        if (prevProps.status !== this.props.status) {
+
+            this.setState({
+                    status: this.props.status
+                }
+            )
+        }
+    }
+
     render() {
+        console.log('render')
         return (
             <>
                 {
