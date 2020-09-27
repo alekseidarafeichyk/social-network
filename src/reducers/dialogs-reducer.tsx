@@ -1,7 +1,6 @@
 import {DialogType, MessageType} from '../redux/store';
 import {v1} from 'uuid';
 
-const UPDATE_MESSAGE = 'Update-Message'
 const ADD_MESSAGE = 'Add-Message'
 
 type DialogsStateType = {
@@ -28,17 +27,11 @@ let initialState: DialogsStateType = {
 }
 
 export type  DialogsActionType =
-    | ReturnType<typeof onMessageChangeAC>
     | ReturnType<typeof addMessageAC>
 
 
 export const dialogsReducer = (state = initialState, action: DialogsActionType) => {
     switch (action.type) {
-        case UPDATE_MESSAGE :
-            return {
-                ...state,
-                newMessageText: action.newMessage
-            }
         case ADD_MESSAGE :
             let newMessage: MessageType = {
                 id: v1(),
@@ -58,6 +51,5 @@ export const dialogsReducer = (state = initialState, action: DialogsActionType) 
     }
 }
 
-export const onMessageChangeAC = (text: string) => ({type: UPDATE_MESSAGE, newMessage: text} as const)
 export const addMessageAC = (text: string) => ({type: ADD_MESSAGE, messageText: text} as const)
 
