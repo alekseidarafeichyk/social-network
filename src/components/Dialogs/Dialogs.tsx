@@ -1,18 +1,27 @@
-import React, {ChangeEvent} from "react";
+import React from 'react';
 import s from './Dialogs.module.css'
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-import {DialogsPageType} from "../../redux/store";
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+import {DialogsPageType} from '../../redux/store';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Textarea} from '../FormsControls/FormsControls';
+import {maxLengthCreator, required} from '../../utils/validators/validators';
 
 
 type MessageFormDataType = {
     newMessageBody: string
 }
 
-const AddMessageForm : React.FC<InjectedFormProps<MessageFormDataType>> = (props) => {
+const maxLength100 = maxLengthCreator(100)
+
+const AddMessageForm: React.FC<InjectedFormProps<MessageFormDataType>> = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        <Field component='textarea' name='newMessageBody' placeholder={'Enter your message'}/>
+        <Field component={Textarea}
+               name='newMessageBody'
+               placeholder={'Enter your message'}
+               validate={[required,maxLength100]}
+
+        />
         <button>add message</button>
     </form>
 }
@@ -20,17 +29,18 @@ const AddMessageForm : React.FC<InjectedFormProps<MessageFormDataType>> = (props
 const AddMessageFormRedux = reduxForm<MessageFormDataType>({form: 'message'})(AddMessageForm)
 
 
-
 type DialogsPropsType = {
     dialogsPage: DialogsPageType,
-    isAuth : boolean
+    isAuth: boolean
     addMessage: (text: string) => void
 }
 
 
 function Dialogs(props: DialogsPropsType) {
-    let messagesElements = props.dialogsPage.messages.map(message => <Message key={message.id}  message={message.message}/>)
-    let dialogsElement = props.dialogsPage.dialogs.map(user => <DialogItem key={user.id} name={user.name} id={user.id}/>)
+    let messagesElements = props.dialogsPage.messages.map(message => <Message key={message.id}
+                                                                              message={message.message}/>)
+    let dialogsElement = props.dialogsPage.dialogs.map(user => <DialogItem key={user.id} name={user.name}
+                                                                           id={user.id}/>)
 
 
     const addNewMessage = (formData: MessageFormDataType) => {
