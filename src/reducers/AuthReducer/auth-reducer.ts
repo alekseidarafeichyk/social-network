@@ -1,5 +1,5 @@
 import {authAPI} from '../../api/api';
-import { Dispatch } from 'react';
+import {Dispatch} from 'react';
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -17,6 +17,8 @@ let InitialState: AuthStateType = {
     isAuth: false,
 }
 
+export type AuthActionType = SetUserDataACType
+
 export const authReducer = (state: AuthStateType = InitialState, action: AuthActionType): AuthStateType => {
     switch (action.type) {
         case 'SET_USER_DATA': {
@@ -25,7 +27,7 @@ export const authReducer = (state: AuthStateType = InitialState, action: AuthAct
                 id: action.userId,
                 email: action.email,
                 login: action.login,
-                isAuth: true,
+                isAuth: action.isAuth,
             }
         }
         default :
@@ -33,35 +35,54 @@ export const authReducer = (state: AuthStateType = InitialState, action: AuthAct
     }
 }
 
-export const setUserDataAC = (userId: number, email: string, login: string): SetUserDataACType => {
+type SetUserDataACType = {
+    type: typeof SET_USER_DATA,
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+
+export const setUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetUserDataACType => {
     return {
         type: SET_USER_DATA,
         userId,
         email,
         login,
+        isAuth
     }
 }
 
-type DispatchGetAuthUserData = Dispatch<AuthActionType>
-
-
 export const getAuthUserData = () => {
-    return (dispatch : DispatchGetAuthUserData) => {
+    return (dispatch: Dispatch<AuthActionType>) => {
         authAPI.me()
             .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data
-                    dispatch(setUserDataAC(id, login, email))
+                    dispatch(setUserDataAC(id, login, email, true))
                 }
             });
     }
 }
 
-export type AuthActionType = SetUserDataACType
-
-type SetUserDataACType = {
-    type: typeof SET_USER_DATA,
-    userId: number
-    email: string
-    login: string
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<any>) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
 }
+
+
+export const logoutTC = () => (dispatch: Dispatch<AuthActionType>) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setUserDataAC(null, null, null, false))
+            }
+        })
+}
+
+
+

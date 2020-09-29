@@ -5,6 +5,7 @@ import {RootState} from '../../redux/redux-store';
 import {changeUserStatus, getUserProfile, getUserStatus, ProfileType} from '../../reducers/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {compose} from 'redux';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
 type MapStatePropsType = {
@@ -61,5 +62,6 @@ const mapStateToProps = (state: RootState) => {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getUserStatus, changeUserStatus}),
+    WithAuthRedirect,
     withRouter,
 )(ProfileContainer)

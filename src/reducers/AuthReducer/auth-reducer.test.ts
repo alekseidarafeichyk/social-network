@@ -12,11 +12,12 @@ beforeEach(() => {
 
 
 test('all values must change', () => {
-    let action = setUserDataAC(4, 'detox@gmail.com', 'Alesha',)
+    let action = setUserDataAC(4, 'detox@gmail.com', 'Alesha',true)
 
     let endState = authReducer(startState, action)
 
     expect(endState.id).toBe(4)
     expect(endState.email).toBe('detox@gmail.com')
     expect(endState.login).toBe('Alesha')
+    expect(endState.isAuth).toBeTruthy()
 })
