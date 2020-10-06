@@ -8,41 +8,6 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const CHANGE_STATUS = 'CHANGE_STATUS'
 
-type ProfileStateType = {
-    posts: Array<PostType>,
-    newPostText: string,
-    profile: null | ProfileType
-    status: string
-}
-
-export type ProfileType = {
-    aboutMe: string
-    contacts: Array<ContactsType>
-    lookingForAJob: true,
-    lookingForAJobDescription: string
-    fullName: string
-    userId: 2,
-    photos: Array<PhotosType>
-}
-
-type ContactsType = {
-    facebook: string
-    website: null
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: null
-    github: string
-    mainLink: null
-}
-
-type PhotosType = {
-    small: string
-    large: string
-}
-
-
-
 //Разобраться с newPostText в инитиал стейте
 
 const initialState: ProfileStateType = {
@@ -54,12 +19,6 @@ const initialState: ProfileStateType = {
     profile: null,
     status: '',
 }
-
-export type ProfileActionType =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof setUserProfileAC>
-    | ReturnType<typeof setStatusAC>
-    | ReturnType<typeof changeStatusAC>
 
 export const profileReducer = (state
                                    = initialState, action: ProfileActionType): ProfileStateType => {
@@ -97,14 +56,13 @@ export const profileReducer = (state
     }
 }
 
+//actions
 export const addPostAC = (text: string) => ({type: ADD_POST, postText: text} as const)
 export const setUserProfileAC = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status} as const)
 export const changeStatusAC = (newStatus: string) => ({type: CHANGE_STATUS, newStatus} as const)
 
-
-type DispatchUserProfile = Dispatch<ProfileActionType>
-
+//thunks
 export const getUserProfile = (userId: string) => {
     return (dispatch: DispatchUserProfile) => {
 
@@ -115,8 +73,6 @@ export const getUserProfile = (userId: string) => {
             })
     }
 }
-
-
 export const getUserStatus = (userId: string) => (dispatch: Dispatch<ProfileActionType>) => {
     profileAPI.getStatus(userId)
         .then(data => {
@@ -125,7 +81,6 @@ export const getUserStatus = (userId: string) => (dispatch: Dispatch<ProfileActi
         })
 
 }
-
 export const changeUserStatus = (newStatus: string) => (dispatch: Dispatch<ProfileActionType>) => {
 
     profileAPI.changeStatus(newStatus)
@@ -137,4 +92,43 @@ export const changeUserStatus = (newStatus: string) => (dispatch: Dispatch<Profi
 
         })
 }
+
+//types
+
+type ProfileStateType = {
+    posts: Array<PostType>,
+    newPostText: string,
+    profile: null | ProfileType
+    status: string
+}
+export type ProfileType = {
+    aboutMe: string
+    contacts: Array<ContactsType>
+    lookingForAJob: true,
+    lookingForAJobDescription: string
+    fullName: string
+    userId: 2,
+    photos: Array<PhotosType>
+}
+type ContactsType = {
+    facebook: string
+    website: null
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: null
+    github: string
+    mainLink: null
+}
+type PhotosType = {
+    small: string
+    large: string
+}
+type DispatchUserProfile = Dispatch<ProfileActionType>
+export type ProfileActionType =
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof changeStatusAC>
+
 

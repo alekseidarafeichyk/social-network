@@ -10,7 +10,6 @@ import {
 } from '../../reducers/UsersReducer/users-reducer';
 import Users from './Users';
 import {CircularProgress} from '@material-ui/core';
-import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 import {compose} from 'redux';
 
 
@@ -28,7 +27,6 @@ type UsersPropsType = {
 }
 
 class UsersContainer extends React.Component<UsersPropsType, RootState> {
-
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }

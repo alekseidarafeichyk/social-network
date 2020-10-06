@@ -18,34 +18,6 @@ export let InitialState: UsersStateType = {
     followingInProgress: []
 }
 
-export type UsersStateType = {
-    users: Array<UsersType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: Array<number>
-}
-
-export type UsersType = {
-    name: string
-    id: number
-    uniqueUrlName: null
-    photos: FhotoUserType
-    status: null
-    followed: boolean
-}
-
-type FhotoUserType = {
-    small: null | string
-    large: null | string
-}
-
-type Location = {
-    country: string
-    city: string
-}
-
 
 export const usersReducer = (state = InitialState, action: UserActionType): UsersStateType => {
     switch (action.type) {
@@ -100,15 +72,8 @@ export const usersReducer = (state = InitialState, action: UserActionType): User
     }
 };
 
-export type UserActionType =
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalCountAC>
-    | ReturnType<typeof toogleIsFetchingAC>
-    | ReturnType<typeof toogleFollowingProgressAC>
 
+//actions
 export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unFollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsersAC = (users: Array<UsersType>) => ({type: SET_USERS, users} as const)
@@ -117,8 +82,9 @@ export const setTotalCountAC = (totalCount: number) => ({type: SET_TOTAL_COUNT, 
 export const toogleIsFetchingAC = (value: boolean) => ({type: TOGGLE_IS_FETCHING, value} as const)
 export const toogleFollowingProgressAC = (isFetching: boolean , userId : number) => ({type: TOGGLE_FOLLOWING_PROGRESS, isFetching, userId} as const)
 
-type DispatchType = Dispatch<UserActionType>
 
+
+//thunks
 export const getUsers =  (currentPage: number, pageSize : number) => {
     return (dispatch : DispatchType) => {
    dispatch(toogleIsFetchingAC(true))
@@ -130,7 +96,6 @@ export const getUsers =  (currentPage: number, pageSize : number) => {
         });
     }
 }
-
 export const unFollowUserThunk =  (userID : number) => {
     return (dispatch : DispatchType) => {
         toogleFollowingProgressAC(true, userID)
@@ -143,7 +108,6 @@ export const unFollowUserThunk =  (userID : number) => {
             })
     }
 }
-
 export const followUserThunk =  (userID : number) => {
     return (dispatch : DispatchType) => {
        dispatch(toogleFollowingProgressAC(true, userID))
@@ -156,5 +120,41 @@ export const followUserThunk =  (userID : number) => {
             })
     }
 }
+
+//types
+type DispatchType = Dispatch<UserActionType>
+export type UsersStateType = {
+    users: Array<UsersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: Array<number>
+}
+export type UsersType = {
+    name: string
+    id: number
+    uniqueUrlName: null
+    photos: FhotoUserType
+    status: null
+    followed: boolean
+}
+type FhotoUserType = {
+    small: null | string
+    large: null | string
+}
+type Location = {
+    country: string
+    city: string
+}
+export type UserActionType =
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unFollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
+    | ReturnType<typeof toogleIsFetchingAC>
+    | ReturnType<typeof toogleFollowingProgressAC>
+
 
 
