@@ -69,7 +69,6 @@ let mapStateToProps = (state: RootState) => {
 }
 
 export default compose<React.ComponentType>(
-    WithAuthRedirect,
     connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     getUsers : getUsers,

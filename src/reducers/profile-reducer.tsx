@@ -110,6 +110,7 @@ export const getUserProfile = (userId: string) => {
 
         usersAPI.getUserProfile(userId)
             .then(data => {
+
                 dispatch(setUserProfileAC(data))
             })
     }
@@ -119,8 +120,8 @@ export const getUserProfile = (userId: string) => {
 export const getUserStatus = (userId: string) => (dispatch: Dispatch<ProfileActionType>) => {
     profileAPI.getStatus(userId)
         .then(data => {
-            dispatch(setStatusAC(data))
 
+            dispatch(setStatusAC(data))
         })
 
 }

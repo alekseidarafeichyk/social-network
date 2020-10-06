@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch} from 'react';
 import {addPostAC} from "../../../reducers/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from 'react-redux';
@@ -10,7 +10,7 @@ let mapStateToProps = (state: RootState) => {
     }
 }
 
-let mapDispatchToProps = (dispatch: any) => {
+let mapDispatchToProps = (dispatch: Dispatch<ReturnType<typeof addPostAC>>) => {
     return {
         addPost : (text:string) => {
             dispatch(addPostAC(text))

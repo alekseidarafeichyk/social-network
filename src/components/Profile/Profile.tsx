@@ -1,14 +1,15 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {ProfileType} from '../../reducers/profile-reducer';
 
-type ProfilePropstType = {
-    profile: any
+type ProfilePropsType = {
+    profile: ProfileType | null
     status: string
     changeUserStatus: (newStatus: string) => void
 }
 
-function Profile(props: ProfilePropstType) {
+function Profile(props: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo profile={props.profile}
