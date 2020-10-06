@@ -19,19 +19,15 @@ import {CircularProgress} from '@material-ui/core';
 type MapDispatchToPropsType = {
     initializedApp : () => void
 }
-
 type MapStateToPropsType = {
     initialized: boolean
 }
-
 type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
-class App extends React.Component<AppPropsType> {
+class App extends React.Component<AppPropsType,RootState> {
     componentDidMount() {
         this.props.initializedApp()
     }
-
-
 
     render() {
         if (!this.props.initialized) {

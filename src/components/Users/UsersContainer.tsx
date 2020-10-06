@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
 import {
     followUserThunk,
-    getUsers,
+    requestUsers,
     setCurrentPageAC,
     unFollowUserThunk,
     UsersType
@@ -11,6 +11,12 @@ import {
 import Users from './Users';
 import {CircularProgress} from '@material-ui/core';
 import {compose} from 'redux';
+import {
+    getCurrentPage, getFollowingInProgress, getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUserPage
+} from '../../reducers/UsersReducer/users-selectors';
 
 
 type UsersPropsType = {
@@ -21,9 +27,9 @@ type UsersPropsType = {
     isFetching: boolean
     followingInProgress: Array<number>
     setCurrentPage: (currentPage: number) => void
-    getUsers : (currentPage: number, pageSize : number) => void
-    unFollowUser : (userID : number) => void
-    followUser : (userID : number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+    unFollowUser: (userID: number) => void
+    followUser: (userID: number) => void
 }
 
 class UsersContainer extends React.Component<UsersPropsType, RootState> {
@@ -57,21 +63,21 @@ class UsersContainer extends React.Component<UsersPropsType, RootState> {
 
 let mapStateToProps = (state: RootState) => {
     return {
-        userPage: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        userPage: getUserPage(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-    setCurrentPage: setCurrentPageAC,
-    getUsers : getUsers,
-    unFollowUser : unFollowUserThunk,
-    followUser : followUserThunk
-}))(UsersContainer)
+        setCurrentPage: setCurrentPageAC,
+        getUsers: requestUsers,
+        unFollowUser: unFollowUserThunk,
+        followUser: followUserThunk
+    }))(UsersContainer)
 
 
