@@ -1,5 +1,5 @@
 import React, {Dispatch} from 'react';
-import {addPostAC} from "../../../reducers/profile-reducer";
+import {addPostAC} from "../../../reducers/ProfileReducer/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from 'react-redux';
 import {RootState} from '../../../redux/redux-store';
@@ -12,7 +12,7 @@ let mapStateToProps = (state: RootState) => {
 
 let mapDispatchToProps = (dispatch: Dispatch<ReturnType<typeof addPostAC>>) => {
     return {
-        addPost : (text:string) => {
+        addPost :  (text:string) => {
             dispatch(addPostAC(text))
         }
     }

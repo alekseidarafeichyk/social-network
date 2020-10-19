@@ -10,7 +10,8 @@ type MyPostsPropsType = {
     posts: ProfilePageType
 }
 
-function MyPosts(props: MyPostsPropsType) {
+
+const MyPosts = React.memo((props: MyPostsPropsType) => {
     let postElements = props.posts.posts.map(post => <Post key={post.id} message={post.message}
                                                            likeCounts={post.likeCounts}/>)
 
@@ -31,6 +32,6 @@ function MyPosts(props: MyPostsPropsType) {
             </div>
         </div>
     );
-}
+});
 
 export default MyPosts;

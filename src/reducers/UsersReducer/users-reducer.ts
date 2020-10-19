@@ -102,7 +102,7 @@ export const requestUsers = (page: number, pageSize: number) => {
 }
 export const unFollowUserThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
-        toogleFollowingProgressAC(true, userID)
+        dispatch(toogleFollowingProgressAC(true, userID))
         usersAPI.unFollowUser(userID)
             .then(data => {
                 if (data.resultCode === 0) {

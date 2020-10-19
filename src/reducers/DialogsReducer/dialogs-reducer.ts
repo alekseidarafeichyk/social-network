@@ -1,4 +1,4 @@
-import {DialogType, MessageType} from '../redux/store';
+import {DialogType, MessageType} from '../../redux/store';
 import {v1} from 'uuid';
 
 const ADD_MESSAGE = 'Add-Message'
@@ -19,7 +19,7 @@ let initialState: DialogsStateType = {
     ],
     newMessageText: '',
 }
-
+ 
 //actions
 export const dialogsReducer = (state = initialState, action: DialogsActionType) => {
     switch (action.type) {
@@ -47,7 +47,7 @@ export const addMessageAC = (text: string) => ({type: ADD_MESSAGE, messageText: 
 
 export type  DialogsActionType =
     | ReturnType<typeof addMessageAC>
-type DialogsStateType = {
+export type DialogsStateType = {
     dialogs: Array<DialogType>,
     messages: Array<MessageType>,
     newMessageText: string,

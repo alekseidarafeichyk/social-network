@@ -1,5 +1,5 @@
 import React from 'react';
-import {addMessageAC} from '../../reducers/dialogs-reducer';
+import {addMessageAC} from '../../reducers/DialogsReducer/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';

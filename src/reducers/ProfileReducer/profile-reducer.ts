@@ -1,7 +1,7 @@
-import {PostType} from '../redux/store';
+import {PostType} from '../../redux/store';
 import {v1} from 'uuid'
 import {Dispatch} from 'react';
-import {profileAPI, usersAPI} from '../api/api';
+import {profileAPI, usersAPI} from '../../api/api';
 
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -16,7 +16,7 @@ const initialState: ProfileStateType = {
         {id: v1(), message: 'Hello', likeCounts: 20},
     ],
     newPostText: '',
-    profile: null,
+    profile:  null,
     status: '',
 }
 
@@ -95,7 +95,7 @@ export const changeUserStatus = (newStatus: string) => (dispatch: Dispatch<Profi
 
 //types
 
-type ProfileStateType = {
+export type ProfileStateType = {
     posts: Array<PostType>,
     newPostText: string,
     profile: null | ProfileType
@@ -103,14 +103,14 @@ type ProfileStateType = {
 }
 export type ProfileType = {
     aboutMe: string
-    contacts: Array<ContactsType>
-    lookingForAJob: true,
+    contacts: ContactsType
+    lookingForAJob: boolean,
     lookingForAJobDescription: string
     fullName: string
-    userId: 2,
-    photos: Array<PhotosType>
+    userId: number,
+    photos: PhotosType
 }
-type ContactsType = {
+export type ContactsType = {
     facebook: string
     website: null
     vk: string
@@ -120,7 +120,7 @@ type ContactsType = {
     github: string
     mainLink: null
 }
-type PhotosType = {
+export type PhotosType = {
     small: string
     large: string
 }

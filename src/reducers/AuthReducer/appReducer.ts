@@ -32,5 +32,5 @@ export const initializedAppTC = () => (dispatch: Dispatch<any>) => {
 
 //types
 type ActionTypes = ReturnType<typeof initializedSuccess>
-type InitialStateType = { initialized: boolean }
+export type InitialStateType = { initialized: boolean }
 

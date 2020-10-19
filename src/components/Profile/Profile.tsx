@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {ProfileType} from '../../reducers/profile-reducer';
+import {ProfileType} from '../../reducers/ProfileReducer/profile-reducer';
 
 type ProfilePropsType = {
     profile: ProfileType | null

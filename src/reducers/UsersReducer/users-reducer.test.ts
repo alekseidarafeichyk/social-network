@@ -59,6 +59,7 @@ beforeEach(() => {
         totalUsersCount: 15,
         currentPage: 3,
         isFetching: false,
+        followingInProgress: []
     }
 })
 
@@ -163,3 +164,5 @@ test('should change isFetching', () => {
     expect(startState.isFetching).toBe(false)
     expect(endState.isFetching).toBe(true)
 })
+
+
