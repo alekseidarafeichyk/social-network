@@ -17,22 +17,22 @@ import {RootState} from './redux/redux-store';
 import {CircularProgress} from '@material-ui/core';
 
 type MapDispatchToPropsType = {
-    initializedApp : () => void
+    initializedApp: () => void
 }
 type MapStateToPropsType = {
     initialized: boolean
 }
 type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
-class App extends React.Component<AppPropsType,RootState> {
+class App extends React.Component<AppPropsType, RootState> {
     componentDidMount() {
         this.props.initializedApp()
     }
 
     render() {
         if (!this.props.initialized) {
-          return <CircularProgress disableShrink
-                                   size={100}/>
+            return <CircularProgress disableShrink
+                                     size={100}/>
         }
 
         return (
@@ -56,11 +56,11 @@ class App extends React.Component<AppPropsType,RootState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-    return {initialized : state.app.initialized}
+    return {initialized: state.app.initialized}
 }
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect(mapStateToProps,{initializedApp: initializedAppTC}))
-    (App)
+    connect(mapStateToProps, {initializedApp: initializedAppTC}))
+(App)
 

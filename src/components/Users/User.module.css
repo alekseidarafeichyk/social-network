@@ -1,0 +1,40 @@
+.userContainer {
+    display: flex;
+    padding: 20px 0;
+    border-top: 1px solid #f1f2f2;
+    border-bottom: 1px solid #f1f2f2;
+    margin-bottom: 20px;
+}
+
+.userDescription {
+    width: 58.3333%;
+}
+
+.photo {
+    width: 16.67%;
+}
+
+.photo img{
+    width: 80px;
+    heigth: 80px;
+    border-radius: 50%;
+}
+
+.btnWrap {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btnMode {
+    background: #27aae1;
+    padding: 7px 25px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 600;
+    outline: none;
+    border-radius: 30px;
+}

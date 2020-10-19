@@ -1,5 +1,6 @@
 import {usersAPI} from '../../api/api';
 import {Dispatch} from 'react';
+import {updateObjectInArray} from '../../utils/validators/objects-helper';
 
 const FOLLOW = 'user/FOLLOW'
 const UNFOLLOW = 'user/UNFOLLOW'
@@ -24,32 +25,12 @@ export const usersReducer = (state = InitialState, action: UserActionType): User
         case FOLLOW :
             return {
                 ...state,
-                users: state.users.map(us => {
-                    if (us.id === action.userId) {
-                        return {
-                            ...us,
-                            followed: !us.followed
-                        }
-                    } else {
-                        return us
-                    }
-
-                })
+                users : updateObjectInArray(state.users,action.userId,'id',{followed: true})
             }
         case UNFOLLOW :
             return {
                 ...state,
-                users: state.users.map(us => {
-                    if (us.id === action.userId) {
-                        return {
-                            ...us,
-                            followed: !us.followed
-                        }
-                    } else {
-                        return us
-                    }
-
-                })
+                users: updateObjectInArray(state.users,action.userId,'id',{followed: false})
             }
         case SET_USERS:
             return {...state, users: [...action.users]}
@@ -99,27 +80,26 @@ export const requestUsers = (page: number, pageSize: number) => async (dispatch:
     dispatch(setUsersAC(response.items))
     dispatch(setTotalCountAC(response.totalCount))
 }
-export const unFollowUserThunk = (userID: number) => async (dispatch: DispatchType) => {
-    dispatch(toogleFollowingProgressAC(true, userID))
 
-    const response = await usersAPI.unFollowUser(userID)
+
+const followUnfollowFlow =  async (dispatch: DispatchType,userID: number,apiMethod: any, actionCreator : any ) => {
+    dispatch(toogleFollowingProgressAC(true, userID))
+    const response = await apiMethod(userID)
 
     if (response.resultCode === 0) {
-        dispatch(unFollowAC(userID))
+        dispatch(actionCreator(userID))
     }
 
     dispatch(toogleFollowingProgressAC(false, userID))
 }
+
+
+
+export const unFollowUserThunk = (userID: number) => async (dispatch: DispatchType) => {
+    await followUnfollowFlow(dispatch,userID,usersAPI.unFollowUser.bind(userID),unFollowAC)
+}
 export const followUserThunk = (userID: number) => async (dispatch: DispatchType) => {
-    dispatch(toogleFollowingProgressAC(true, userID))
-
-    const response = await usersAPI.followUser(userID)
-
-    if (response.resultCode === 0) {
-        dispatch(followAC(userID))
-    }
-
-    dispatch(toogleFollowingProgressAC(false, userID))
+    await followUnfollowFlow(dispatch,userID,usersAPI.followUser.bind(userID),followAC)
 }
 
 //types

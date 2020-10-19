@@ -2,10 +2,11 @@ import React from 'react';
 import style from './ProfileInfo.module.css';
 import {CircularProgress} from '@material-ui/core';
 import {ProfileStatusWithHook} from './ProfileStatusWithHook';
+import {ProfileType} from '../../../reducers/ProfileReducer/profile-reducer';
 
 
 type ProfileInfoPropsType = {
-    profile: any
+    profile: ProfileType | null
     status: string
     changeUserStatus: (newStatus: string) => void
 }
@@ -20,8 +21,6 @@ function ProfileInfo(props: ProfileInfoPropsType) {
     return (
         <div>
             <div className={style.img}>
-                {/*<img src="https://bipbap.ru/wp-content/uploads/2017/06/1-13.jpg" alt=""/>*/}
-                {/* eslint-disable-next-line react/jsx-no-undef */}
                 <ProfileStatusWithHook {...props}/>
             </div>
             <div className={style.descriptionBlock}>
