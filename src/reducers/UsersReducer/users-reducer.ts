@@ -1,13 +1,13 @@
 import {usersAPI} from '../../api/api';
 import {Dispatch} from 'react';
 
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_USERS = 'SET_USERS'
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const TOGGLE_FOLLOWING_PROGRESS = 'TOGGLE_FOLLOWING_PROGRESS'
+const FOLLOW = 'user/FOLLOW'
+const UNFOLLOW = 'user/UNFOLLOW'
+const SET_USERS = 'user/SET_USERS'
+const SET_CURRENT_PAGE = 'user/SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'user/SET_TOTAL_COUNT'
+const TOGGLE_IS_FETCHING = 'user/TOGGLE_IS_FETCHING'
+const TOGGLE_FOLLOWING_PROGRESS = 'user/TOGGLE_FOLLOWING_PROGRESS'
 
 export let InitialState: UsersStateType = {
     users: [],
@@ -88,41 +88,38 @@ export const toogleFollowingProgressAC = (isFetching: boolean, userId: number) =
 
 
 //thunks
-export const requestUsers = (page: number, pageSize: number) => {
-    return (dispatch: DispatchType) => {
-        dispatch(toogleIsFetchingAC(true))
-        dispatch(setCurrentPageAC(page))
-        usersAPI.getUsers(page, pageSize)
-            .then(data => {
-                dispatch(toogleIsFetchingAC(false))
-                dispatch(setUsersAC(data.items))
-                dispatch(setTotalCountAC(data.totalCount))
-            });
-    }
+export const requestUsers = (page: number, pageSize: number) => async (dispatch: DispatchType) => {
+
+    dispatch(toogleIsFetchingAC(true))
+    dispatch(setCurrentPageAC(page))
+
+    const response = await usersAPI.getUsers(page, pageSize)
+
+    dispatch(toogleIsFetchingAC(false))
+    dispatch(setUsersAC(response.items))
+    dispatch(setTotalCountAC(response.totalCount))
 }
-export const unFollowUserThunk = (userID: number) => {
-    return (dispatch: DispatchType) => {
-        dispatch(toogleFollowingProgressAC(true, userID))
-        usersAPI.unFollowUser(userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unFollowAC(userID))
-                }
-                dispatch(toogleFollowingProgressAC(false, userID))
-            })
+export const unFollowUserThunk = (userID: number) => async (dispatch: DispatchType) => {
+    dispatch(toogleFollowingProgressAC(true, userID))
+
+    const response = await usersAPI.unFollowUser(userID)
+
+    if (response.resultCode === 0) {
+        dispatch(unFollowAC(userID))
     }
+
+    dispatch(toogleFollowingProgressAC(false, userID))
 }
-export const followUserThunk = (userID: number) => {
-    return (dispatch: DispatchType) => {
-        dispatch(toogleFollowingProgressAC(true, userID))
-        usersAPI.followUser(userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(followAC(userID))
-                }
-                dispatch(toogleFollowingProgressAC(false, userID))
-            })
+export const followUserThunk = (userID: number) => async (dispatch: DispatchType) => {
+    dispatch(toogleFollowingProgressAC(true, userID))
+
+    const response = await usersAPI.followUser(userID)
+
+    if (response.resultCode === 0) {
+        dispatch(followAC(userID))
     }
+
+    dispatch(toogleFollowingProgressAC(false, userID))
 }
 
 //types

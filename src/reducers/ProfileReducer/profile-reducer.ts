@@ -1,12 +1,11 @@
-import {PostType} from '../../redux/store';
 import {v1} from 'uuid'
 import {Dispatch} from 'react';
 import {profileAPI, usersAPI} from '../../api/api';
 
-const ADD_POST = 'ADD_POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_STATUS = 'SET_STATUS'
-const CHANGE_STATUS = 'CHANGE_STATUS'
+const ADD_POST = 'profile/ADD_POST'
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
+const SET_STATUS = 'profile/SET_STATUS'
+const CHANGE_STATUS = 'profile/CHANGE_STATUS'
 
 //Разобраться с newPostText в инитиал стейте
 
@@ -16,7 +15,7 @@ const initialState: ProfileStateType = {
         {id: v1(), message: 'Hello', likeCounts: 20},
     ],
     newPostText: '',
-    profile:  null,
+    profile: null,
     status: '',
 }
 
@@ -73,24 +72,16 @@ export const getUserProfile = (userId: string) => {
             })
     }
 }
-export const getUserStatus = (userId: string) => (dispatch: Dispatch<ProfileActionType>) => {
-    profileAPI.getStatus(userId)
-        .then(data => {
-
-            dispatch(setStatusAC(data))
-        })
-
+export const getUserStatus = (userId: string) => async (dispatch: Dispatch<ProfileActionType>) => {
+    const resolve = await profileAPI.getStatus(userId)
+    dispatch(setStatusAC(resolve))
 }
-export const changeUserStatus = (newStatus: string) => (dispatch: Dispatch<ProfileActionType>) => {
 
-    profileAPI.changeStatus(newStatus)
-        .then(data => {
-
-            if (data.resultCode === 0) {
+export const changeUserStatus = (newStatus: string) => async (dispatch: Dispatch<ProfileActionType>) => {
+   let response = await profileAPI.changeStatus(newStatus)
+            if (response.resultCode === 0) {
                 dispatch(changeStatusAC(newStatus))
             }
-
-        })
 }
 
 //types
@@ -130,5 +121,15 @@ export type ProfileActionType =
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof changeStatusAC>
+export type PostType = {
+    id: string,
+    message: string,
+    likeCounts: number
+}
+
+export type ProfilePageType = {
+    posts: Array<PostType>,
+    newPostText: string
+}
 
 

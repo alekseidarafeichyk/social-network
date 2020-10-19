@@ -1,7 +1,6 @@
-import {DialogType, MessageType} from '../../redux/store';
 import {v1} from 'uuid';
 
-const ADD_MESSAGE = 'Add-Message'
+const ADD_MESSAGE = 'dialogs/Add-Message'
 
 let initialState: DialogsStateType = {
     dialogs: [
@@ -51,5 +50,13 @@ export type DialogsStateType = {
     dialogs: Array<DialogType>,
     messages: Array<MessageType>,
     newMessageText: string,
+}
+export type MessageType = {
+    id: string
+    message: string
+}
+export type DialogType = {
+    id: string,
+    name: string
 }
 

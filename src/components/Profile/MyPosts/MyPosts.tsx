@@ -1,14 +1,15 @@
 import React from 'react';
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
-import {ProfilePageType} from '../../../redux/store';
 import {AddNewPostReduxForm, PostFormDataType} from './Post/AddNewPostReduxForm';
+import {ProfilePageType} from '../../../reducers/ProfileReducer/profile-reducer';
 
 
 type MyPostsPropsType = {
     addPost: (text: string) => void
     posts: ProfilePageType
 }
+
 
 
 const MyPosts = React.memo((props: MyPostsPropsType) => {

@@ -57,37 +57,30 @@ import {v1} from "uuid";
 //     },
 // }
 
-export type MessageType = {
-    id: string
-    message: string
-}
 
-export type DialogType = {
-    id: string,
-    name: string
-}
-
-export type PostType = {
-    id: string,
-    message: string,
-    likeCounts: number
-}
-
-export type ProfilePageType = {
-    posts: Array<PostType>,
-    newPostText: string
-}
-
-export type DialogsPageType = {
-    dialogs: Array<DialogType>,
-    messages: Array<MessageType>,
-    newMessageText: string,
-}
-
-export type RootStateType = {
-    profilePage: ProfilePageType,
-    dialogsPage: DialogsPageType,
-}
+//
+//
+// export type PostType = {
+//     id: string,
+//     message: string,
+//     likeCounts: number
+// }
+//
+// export type ProfilePageType = {
+//     posts: Array<PostType>,
+//     newPostText: string
+// }
+//
+// export type DialogsPageType = {
+//     dialogs: Array<DialogType>,
+//     messages: Array<MessageType>,
+//     newMessageText: string,
+// }
+//
+// export type RootStateType = {
+//     profilePage: ProfilePageType,
+//     dialogsPage: DialogsPageType,
+// }
 
 // export default store;
 
