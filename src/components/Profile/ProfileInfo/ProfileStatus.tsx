@@ -1,12 +1,12 @@
 import React, {ChangeEvent} from 'react';
 
 
-type ProfileStatusStateType = {
+export type ProfileStatusStateType = {
     editMode: boolean
     status: string
 }
 
-type ProfileStatusPropsType = {
+export type ProfileStatusPropsType = {
     status: string
     changeUserStatus: (newStatus: string) => void
 }

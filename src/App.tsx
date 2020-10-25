@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Setting from './components/Setting/Setting';
@@ -11,9 +11,9 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {compose} from 'redux';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {initializedAppTC} from './reducers/AuthReducer/appReducer';
-import {RootState} from './redux/redux-store';
+import store, {RootState} from './redux/redux-store';
 import {CircularProgress} from '@material-ui/core';
 
 type MapDispatchToPropsType = {
@@ -59,8 +59,18 @@ const mapStateToProps = (state: RootState) => {
     return {initialized: state.app.initialized}
 }
 
-export default compose<React.ComponentType>(
+const AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializedApp: initializedAppTC}))
 (App)
+
+let SocialTSApp = (props:any) => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default SocialTSApp
 

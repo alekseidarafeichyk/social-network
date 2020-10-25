@@ -1,19 +1,12 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import store from './redux/redux-store'
 import ReactDOM from 'react-dom';
-import App from './App';
-import {BrowserRouter} from 'react-router-dom';
-import {Provider} from 'react-redux';
+import SocialTSApp from './App';
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </BrowserRouter>
+        <SocialTSApp/>
     </React.StrictMode>,
     document.getElementById('root')
 );
