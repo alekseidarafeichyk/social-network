@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/Music/Music.tsx"],"names":["Music"],"mappings":"gHAAA,2BAQeA,UANf,WACI,OACI","file":"static/js/8.819f187c.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nfunction Music() {\r\n    return (\r\n        <div>Music</div>\r\n    );\r\n}\r\n\r\nexport default Music;"],"sourceRoot":""}
