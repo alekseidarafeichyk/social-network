@@ -44,11 +44,11 @@ class App extends React.Component<AppPropsType, RootState> {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
+                    <Route path={'/users'} render={WithSuspense(UsersContainer)}/>
                     <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
                     <Route path={'/news'} render={WithSuspense(News)}/>
                     <Route path={'/music'} render={WithSuspense(Music)}/>
                     <Route path={'/setting'} render={WithSuspense(Setting)}/>
-                    <Route path={'/users'} render={WithSuspense(UsersContainer)}/>
                     <Route path={'/login'} render={WithSuspense(Login)}/>
                 </div>
             </div>

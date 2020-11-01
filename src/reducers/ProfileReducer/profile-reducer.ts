@@ -6,6 +6,7 @@ const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
 const SET_STATUS = 'profile/SET_STATUS'
 const CHANGE_STATUS = 'profile/CHANGE_STATUS'
+const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS'
 
 //Разобраться с newPostText в инитиал стейте
 
@@ -15,7 +16,18 @@ const initialState: ProfileStateType = {
         {id: v1(), message: 'Hello', likeCounts: 20},
     ],
     newPostText: '',
-    profile: null,
+    profile: {
+        aboutMe: '',
+        contacts: null,
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        fullName: '',
+        userId: 0,
+        photos: {
+            large: '',
+            small: ''
+        }
+    } ,
     status: '',
 }
 
@@ -50,6 +62,13 @@ export const profileReducer = (state
                 ...state,
                 status: action.newStatus
             }
+        case SAVE_PHOTO_SUCCESS:
+            debugger
+            return {
+
+                ...state,
+                profile : {...state.profile,photos: action.photo}
+            }
         default:
             return state;
     }
@@ -60,6 +79,7 @@ export const addPostAC = (text: string) => ({type: ADD_POST, postText: text} as 
 export const setUserProfileAC = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status} as const)
 export const changeStatusAC = (newStatus: string) => ({type: CHANGE_STATUS, newStatus} as const)
+export const savePhotoSuccessAC = (photo: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, photo} as const)
 
 //thunks
 export const getUserProfile = (userId: string) => {
@@ -78,10 +98,18 @@ export const getUserStatus = (userId: string) => async (dispatch: Dispatch<Profi
 }
 
 export const changeUserStatus = (newStatus: string) => async (dispatch: Dispatch<ProfileActionType>) => {
-   let response = await profileAPI.changeStatus(newStatus)
-            if (response.resultCode === 0) {
-                dispatch(changeStatusAC(newStatus))
-            }
+    let response = await profileAPI.changeStatus(newStatus)
+    if (response.resultCode === 0) {
+        dispatch(changeStatusAC(newStatus))
+    }
+}
+
+export const savePhoto = (photo: any) => async (dispatch: Dispatch<any>) => {
+    let response = await profileAPI.savePhoto(photo)
+
+    if (response.resultCode === 0) {
+        dispatch(savePhotoSuccessAC(response.data.photos))
+    }
 }
 
 //types
@@ -89,12 +117,12 @@ export const changeUserStatus = (newStatus: string) => async (dispatch: Dispatch
 export type ProfileStateType = {
     posts: Array<PostType>,
     newPostText: string,
-    profile: null | ProfileType
+    profile: ProfileType
     status: string
 }
 export type ProfileType = {
     aboutMe: string
-    contacts: ContactsType
+    contacts: ContactsType | null
     lookingForAJob: boolean,
     lookingForAJobDescription: string
     fullName: string
@@ -121,6 +149,7 @@ export type ProfileActionType =
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof changeStatusAC>
+    | ReturnType<typeof savePhotoSuccessAC>
 export type PostType = {
     id: string,
     message: string,

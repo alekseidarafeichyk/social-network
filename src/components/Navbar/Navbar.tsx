@@ -9,6 +9,9 @@ function Navbar() {
                 <NavLink to='/profile' activeClassName={classes.activeLink}>Profile</NavLink>
             </div>
             <div className={classes.item}>
+                <NavLink to='/users' activeClassName={classes.activeLink}>Users</NavLink>
+            </div>
+            <div className={classes.item}>
                 <NavLink to='/dialogs' activeClassName={classes.activeLink}>Messages</NavLink>
             </div>
             <div className={classes.item}>
@@ -19,9 +22,6 @@ function Navbar() {
             </div>
             <div className={classes.item}>
                 <NavLink  to='/setting' activeClassName={classes.activeLink}>Setting</NavLink>
-            </div>
-            <div className={classes.item}>
-                <NavLink to='/users' activeClassName={classes.activeLink}>Users</NavLink>
             </div>
         </nav>
     );
