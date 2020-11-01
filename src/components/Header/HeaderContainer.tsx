@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {AuthStateType, getAuthUserDataTC, logoutTC} from '../../reducers/AuthReducer/auth-reducer';
+import {AuthStateType, logoutTC} from '../../reducers/AuthReducer/auth-reducer';
 
 type MapDispatchPropsType = {
     logoutTC : () => void

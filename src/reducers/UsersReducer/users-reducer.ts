@@ -14,9 +14,10 @@ export let InitialState: UsersStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 3,
+    currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    portionSize: 10
 }
 
 
@@ -111,6 +112,8 @@ export type UsersStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
+    portionSize: number
+
 }
 export type UsersType = {
     name: string

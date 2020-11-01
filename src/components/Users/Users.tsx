@@ -12,16 +12,18 @@ type UsersPropsType = {
     userPage: Array<UsersType>
     unFollowUser: (userID: number) => void
     followUser: (userID: number) => void
+    portionSize: number
 }
 
 function Users(props: UsersPropsType) {
 
     return (
         <div>
-            <Paginator totalUsersCount={props.totalUsersCount}
+            <Paginator totalItemsCount={props.totalUsersCount}
                        pageSize={props.pageSize}
                        currentPage={props.currentPage}
                        onPageChanged={props.onPageChanged}
+                       portionSize={props.portionSize}
             />
             {
                 props.userPage.map(us => <User key={us.id}
