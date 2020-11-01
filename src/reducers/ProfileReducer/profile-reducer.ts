@@ -104,8 +104,8 @@ export const changeUserStatus = (newStatus: string) => async (dispatch: Dispatch
     }
 }
 
-export const savePhoto = (photo: any) => async (dispatch: Dispatch<any>) => {
-    let response = await profileAPI.savePhoto(photo)
+export const ChangeMyPhoto = (photo: File) => async (dispatch: Dispatch<ProfileActionType>) => {
+    let response = await profileAPI.ChangeMyPhoto(photo)
 
     if (response.resultCode === 0) {
         dispatch(savePhotoSuccessAC(response.data.photos))
