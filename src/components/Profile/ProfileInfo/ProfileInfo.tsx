@@ -1,11 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import style from './ProfileInfo.module.css';
 import {CircularProgress} from '@material-ui/core';
 import {ProfileStatusWithHook} from './ProfileStatusWithHook';
 import {ProfileType} from '../../../reducers/ProfileReducer/profile-reducer';
 import userPhoto from './../../../assets/images/user.png'
+import {ProfileData} from './ProfileData/ProfileData';
+import {FormDataType, ProfileDataReduxForm} from './ProfileData/ProfileDataForm';
 
 function ProfileInfo(props: ProfileInfoPropsType) {
+    const [editMode, setEditMode] = useState<boolean>(false)
+
     if (!props.profile) {
         return <CircularProgress
             disableShrink
@@ -19,6 +23,17 @@ function ProfileInfo(props: ProfileInfoPropsType) {
         }
     }
 
+    const onEditMode = () => {
+        setEditMode(true)
+    }
+
+    const onSubmit =  (formData: FormDataType) => {
+         props.saveProfileData(formData).then(() => {
+                 setEditMode(false)
+             }
+         )
+    }
+
     return (
         <div>
             <div className={style.img}>
@@ -27,31 +42,38 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             <div className={style.descriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} alt=""/>
                 {props.isOwner && <input type={'file'} onChange={sendMyPhotoOnServer}></input>}
-                <div>
-                    Full name: {props.profile.fullName}
-                </div>
-                <div>
-                    About me: {props.profile.aboutMe}
-                </div>
-                <div>
-                    Looking for a job:  {props.profile.lookingForAJob}
-                </div>
-                <div> Contacts :
-                     <div>facebook: {props.profile.contacts?.facebook}</div>
-                     <div>website: {props.profile.contacts?.website}</div>
-                     <div>vk: {props.profile.contacts?.vk}</div>
-                     <div>twitter: {props.profile.contacts?.twitter}</div>
-                     <div>instagram: {props.profile.contacts?.instagram}</div>
-                     <div>youtube: {props.profile.contacts?.youtube}</div>
-                     <div>github: {props.profile.contacts?.github}</div>
-                     <div>mainLink: {props.profile.contacts?.mainLink}</div>
-                </div>
+
+                {editMode ?
+                    <ProfileDataReduxForm
+                        initialValues={props.profile}
+                        onSubmit={onSubmit}
+                        contacts={props.profile.contacts}
+                    /> :
+                    <ProfileData profile={props.profile}
+                                 status={props.status}
+                                 isOwner={props.isOwner}
+                                 onEditMode={onEditMode}
+
+                    />}
+
             </div>
         </div>
     );
 }
 
+
+type ContactPropsType = {
+    contactTitle: string
+    contactValue: any
+}
+
+export const Contact = (props: ContactPropsType) => {
+    return <div>{props.contactTitle} : {props.contactValue}</div>
+}
+
+
 export default ProfileInfo;
+
 
 //types
 type ProfileInfoPropsType = {
@@ -60,4 +82,5 @@ type ProfileInfoPropsType = {
     changeUserStatus: (newStatus: string) => void
     isOwner: boolean
     savePhoto: (photo: File) => void
+    saveProfileData: (profile: any) =>  any
 }

@@ -27,7 +27,7 @@ export const authReducer = (state: AuthStateType = InitialState, action: AuthAct
 }
 
 //actions
-export const setUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) =>
+export const setUserDataAC = (userId: string | null, email: string | null, login: string | null, isAuth: boolean) =>
     ({type: SET_USER_DATA, userId, email, login, isAuth} as const)
 
 //thunks
@@ -58,7 +58,7 @@ export const logoutTC = () => async (dispatch: Dispatch<AuthActionType>) => {
 
 //types
 export type AuthStateType = {
-    id: number | null
+    id: string | null
     email: string | null
     login: string | null
     isAuth: boolean

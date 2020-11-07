@@ -11,7 +11,8 @@ function Profile(props: ProfilePropsType) {
                          changeUserStatus={props.changeUserStatus}
                          isOwner={props.isOwner}
                          savePhoto={props.savePhoto}
-            />
+                         saveProfileData={props.saveProfileData}
+        />
             <MyPostsContainer/>
         </div>
     );
@@ -26,4 +27,5 @@ type ProfilePropsType = {
     changeUserStatus: (newStatus: string) => void
     isOwner: boolean
     savePhoto: (photo: File) => void
+    saveProfileData: (profile:any) => any
 }

@@ -1,6 +1,8 @@
 import {v1} from 'uuid'
 import {Dispatch} from 'react';
 import {profileAPI, usersAPI} from '../../api/api';
+import {RootState} from '../../redux/redux-store';
+import {stopSubmit} from 'redux-form';
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
@@ -16,18 +18,7 @@ const initialState: ProfileStateType = {
         {id: v1(), message: 'Hello', likeCounts: 20},
     ],
     newPostText: '',
-    profile: {
-        aboutMe: '',
-        contacts: null,
-        lookingForAJob: false,
-        lookingForAJobDescription: '',
-        fullName: '',
-        userId: 0,
-        photos: {
-            large: '',
-            small: ''
-        }
-    } ,
+    profile: null ,
     status: '',
 }
 
@@ -67,7 +58,7 @@ export const profileReducer = (state
             return {
 
                 ...state,
-                profile : {...state.profile,photos: action.photo}
+                profile : {...state.profile,photos: action.photo} as ProfileType
             }
         default:
             return state;
@@ -82,7 +73,7 @@ export const changeStatusAC = (newStatus: string) => ({type: CHANGE_STATUS, newS
 export const savePhotoSuccessAC = (photo: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, photo} as const)
 
 //thunks
-export const getUserProfile = (userId: string) => {
+export const getUserProfile = (userId: string | null) => {
     return (dispatch: DispatchUserProfile) => {
 
         usersAPI.getUserProfile(userId)
@@ -111,34 +102,36 @@ export const ChangeMyPhoto = (photo: File) => async (dispatch: Dispatch<ProfileA
         dispatch(savePhotoSuccessAC(response.data.photos))
     }
 }
+export const saveProfileData = (profile:any) => async (dispatch: Dispatch<any>,getState : () => RootState) => {
+    const id = getState().auth.id
+    const response = await profileAPI.saveProfileData(profile)
+
+    if (response.resultCode === 0) {
+       dispatch(getUserProfile(id))
+    } else  {
+        dispatch(stopSubmit('edit-profile', {_error: `${response.messages[0]}`}))
+        return Promise.reject(response.messages[0])
+    }
+}
 
 //types
 
 export type ProfileStateType = {
     posts: Array<PostType>,
     newPostText: string,
-    profile: ProfileType
+    profile: ProfileType | null
     status: string
 }
 export type ProfileType = {
     aboutMe: string
-    contacts: ContactsType | null
+    contacts: ContactsType
     lookingForAJob: boolean,
     lookingForAJobDescription: string
     fullName: string
     userId: number,
     photos: PhotosType
 }
-export type ContactsType = {
-    facebook: string
-    website: null
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: null
-    github: string
-    mainLink: null
-}
+export type ContactsType  = { [key: string]: string; }
 export type PhotosType = {
     small: string
     large: string

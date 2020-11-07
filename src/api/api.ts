@@ -15,7 +15,7 @@ export const usersAPI = {
             {withCredentials: true})
             .then(response => response.data)
     },
-    getUserProfile(userId: string) {
+    getUserProfile(userId?: string | null) {
         console.warn('Obsolete method.Please profileAPI object');
         return profileAPI.getUserProfile(userId);
     },
@@ -31,7 +31,7 @@ export const usersAPI = {
 
 
 export const profileAPI = {
-    getUserProfile(userId = '9442') {
+    getUserProfile(userId : null | string = '9442') {
         return instance.get(`profile/` + userId)
             .then(response => response.data)
     },
@@ -51,6 +51,10 @@ export const profileAPI = {
         return instance.put('profile/photo',formData,{ headers: {
                 'Content-Type': 'multipart/form-data'
             }})
+            .then(response => response.data)
+    },
+    saveProfileData(profile:any) {
+        return instance.put(`profile`,profile)
             .then(response => response.data)
     }
 }
