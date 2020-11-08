@@ -28,7 +28,6 @@ export const ProfileData = (props: ProfileDataPropsType) => {
             {Object.keys(props.profile.contacts).map((el) => <Contact key={el}
                                                                       contactValue={props.profile?.contacts[el]}
                                                                       contactTitle={el}/>)}
-
         </div>
     </div>
 }

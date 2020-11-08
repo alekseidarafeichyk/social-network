@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import HeaderContainer from './components/Header/HeaderContainer';
 import {compose} from 'redux';
 import {connect, Provider} from 'react-redux';
@@ -28,9 +28,20 @@ type MapStateToPropsType = {
 type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 class App extends React.Component<AppPropsType, RootState> {
+   catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) =>{
+        //создать глобал эрор и диспатчить
+        // alert('Some error occured');
+        console.log(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializedApp()
+        window.addEventListener('unhandledrejection',this.catchAllUnhandledErrors)
     }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection',this.catchAllUnhandledErrors)
+    }
+
 
     render() {
         if (!this.props.initialized) {
@@ -43,13 +54,16 @@ class App extends React.Component<AppPropsType, RootState> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
-                    <Route path={'/users'} render={WithSuspense(UsersContainer)}/>
-                    <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
-                    <Route path={'/news'} render={WithSuspense(News)}/>
-                    <Route path={'/music'} render={WithSuspense(Music)}/>
-                    <Route path={'/setting'} render={WithSuspense(Setting)}/>
-                    <Route path={'/login'} render={WithSuspense(Login)}/>
+                    <Switch>
+                        <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
+                        <Route path={'/users'} render={WithSuspense(UsersContainer)}/>
+                        <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
+                        <Route path={'/news'} render={WithSuspense(News)}/>
+                        <Route path={'/music'} render={WithSuspense(Music)}/>
+                        <Route path={'/setting'} render={WithSuspense(Setting)}/>
+                        <Route path={'/login'} render={WithSuspense(Login)}/>
+                        <Redirect exact from="/" to="/profile" />
+                    </Switch>
                 </div>
             </div>
         );

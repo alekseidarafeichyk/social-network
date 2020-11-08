@@ -64,7 +64,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 
 type ContactPropsType = {
     contactTitle: string
-    contactValue: any
+    contactValue: string
 }
 
 export const Contact = (props: ContactPropsType) => {

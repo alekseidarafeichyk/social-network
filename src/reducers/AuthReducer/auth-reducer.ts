@@ -59,7 +59,6 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
         let message = response.data.messages.length > 0 ? response.data.messages : 'Some error'
         dispatch(stopSubmit('login', {_error: `${message}`}))
     }
-
 }
 
 export const getCaptcha = () => async (dispatch: Dispatch<any>) => {
