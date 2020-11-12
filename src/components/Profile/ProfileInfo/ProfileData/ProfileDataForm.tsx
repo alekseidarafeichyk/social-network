@@ -18,7 +18,6 @@ export type ContactsPropsType = {
 
 const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsType> & ContactsPropsType> = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        {<button type={'submit'}>Save</button>}
         {props.error && <div className={style.formSummaryError}>
             {props.error}
         </div>}
@@ -47,7 +46,6 @@ const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsTyp
                                            name={'lookingForAJobDescription'}
                                            component={Textarea}/>
         </div>
-        {/*<div>Status: {props.status}</div>*/}
         <div> Contacts :
             {Object.keys(props.contacts).map((el) => {
                 return <Field placeholder={el}
@@ -55,7 +53,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsTyp
                               component={Input}
                 />
             })}
-
+            {<button type={'submit'}>Save</button>}
         </div>
     </form>
 }

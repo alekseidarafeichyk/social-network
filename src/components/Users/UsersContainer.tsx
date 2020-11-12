@@ -9,7 +9,6 @@ import {
     UsersType
 } from '../../reducers/UsersReducer/users-reducer';
 import Users from './Users';
-import {CircularProgress} from '@material-ui/core';
 import {compose} from 'redux';
 import {
     getCurrentPage, getFollowingInProgress, getIsFetching,
@@ -17,6 +16,7 @@ import {
     getTotalUsersCount,
     getUserPage
 } from '../../reducers/UsersReducer/users-selectors';
+import {Loader} from '../common/Loader/Loader';
 
 
 type UsersPropsType = {
@@ -46,9 +46,7 @@ class UsersContainer extends React.Component<UsersPropsType, RootState> {
 
     render() {
         return <>
-            {this.props.isFetching ? <CircularProgress
-                disableShrink
-                size={100}
+            {this.props.isFetching ? <Loader
             /> : null}
             <Users
                 totalUsersCount={this.props.totalUsersCount}

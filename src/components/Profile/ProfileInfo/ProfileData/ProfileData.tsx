@@ -10,7 +10,6 @@ type ProfileDataPropsType = {
 }
 export const ProfileData = (props: ProfileDataPropsType) => {
     return <div>
-        {props.isOwner && <button onClick={props.onEditMode}>Edit Profile</button>}
         <div>
             Full name: {props.profile.fullName}
         </div>
@@ -29,5 +28,6 @@ export const ProfileData = (props: ProfileDataPropsType) => {
                                                                       contactValue={props.profile?.contacts[el]}
                                                                       contactTitle={el}/>)}
         </div>
+        {props.isOwner && <button onClick={props.onEditMode}>Edit Profile</button>}
     </div>
 }

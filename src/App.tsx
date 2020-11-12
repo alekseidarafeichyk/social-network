@@ -7,8 +7,8 @@ import {compose} from 'redux';
 import {connect, Provider} from 'react-redux';
 import {initializedAppTC} from './reducers/AuthReducer/appReducer';
 import store, {RootState} from './redux/redux-store';
-import {CircularProgress} from '@material-ui/core';
 import {WithSuspense} from './hoc/WithSuspense';
+import {Loader} from './components/common/Loader/Loader';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -45,8 +45,7 @@ class App extends React.Component<AppPropsType, RootState> {
 
     render() {
         if (!this.props.initialized) {
-            return <CircularProgress disableShrink
-                                     size={100}/>
+            return <Loader/>
         }
 
         return (

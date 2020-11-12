@@ -1,9 +1,9 @@
 import React, {Suspense} from 'react';
-import {CircularProgress} from '@material-ui/core';
+import {Loader} from '../components/common/Loader/Loader';
 
 
 export const WithSuspense = (Component: any) => {
-    return (props: any) => <Suspense fallback={<CircularProgress size={100}/>}>
+    return (props: any) => <Suspense fallback={<Loader/>}>
         <Component {...props}/>
     </Suspense>
 }

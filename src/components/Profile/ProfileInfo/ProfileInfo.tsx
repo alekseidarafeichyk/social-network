@@ -1,19 +1,17 @@
 import React, {ChangeEvent, useState} from 'react';
 import style from './ProfileInfo.module.css';
-import {CircularProgress} from '@material-ui/core';
 import {ProfileStatusWithHook} from './ProfileStatusWithHook';
 import {ProfileType} from '../../../reducers/ProfileReducer/profile-reducer';
 import userPhoto from './../../../assets/images/user.png'
 import {ProfileData} from './ProfileData/ProfileData';
 import {FormDataType, ProfileDataReduxForm} from './ProfileData/ProfileDataForm';
+import {Loader} from '../../common/Loader/Loader';
 
 function ProfileInfo(props: ProfileInfoPropsType) {
     const [editMode, setEditMode] = useState<boolean>(false)
 
     if (!props.profile) {
-        return <CircularProgress
-            disableShrink
-            size={100}
+        return <Loader
         />
     }
 
@@ -35,14 +33,13 @@ function ProfileInfo(props: ProfileInfoPropsType) {
     }
 
     return (
-        <div>
-            <div className={style.img}>
+        <div className={style.userInfo}>
+            <div className={style.photoBlock}>
                 <ProfileStatusWithHook {...props}/>
-            </div>
-            <div className={style.descriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} alt=""/>
                 {props.isOwner && <input type={'file'} onChange={sendMyPhotoOnServer}></input>}
-
+            </div>
+            <div className={style.description}>
                 {editMode ?
                     <ProfileDataReduxForm
                         initialValues={props.profile}
@@ -55,7 +52,6 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                                  onEditMode={onEditMode}
 
                     />}
-
             </div>
         </div>
     );
