@@ -1,2 +1,0 @@
-(this["webpackJsonpsocial-web"]=this["webpackJsonpsocial-web"]||[]).push([[9],{315:function(e,n,s){"use strict";s.r(n);var t=s(0),a=s.n(t);n.default=function(){return a.a.createElement("div",null,"News")}}}]);
-//# sourceMappingURL=9.74b9b0fc.chunk.js.map
