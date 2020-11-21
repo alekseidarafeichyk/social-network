@@ -4,6 +4,7 @@ import {Input, Textarea} from '../../../common/FormsControls/FormsControls';
 import {required} from '../../../../utils/validators/validators';
 import {ContactsType} from '../../../../reducers/ProfileReducer/profile-reducer';
 import style from '../../../common/FormsControls/FormsControls.module.css';
+import styleField from './ProfileData.module.css'
 
 export type FormDataType = {
     fullName: string
@@ -21,19 +22,19 @@ const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsTyp
         {props.error && <div className={style.formSummaryError}>
             {props.error}
         </div>}
-        <div>
+        <div className={styleField.field}>
             Full name: <Field placeholder={'Full name'}
                               name={'fullName'}
                               component={Input}
                               validate={[required]}/>
         </div>
-        <div>
+        <div className={styleField.field}>
             About me: <Field placeholder={'About Me'}
                              name={'aboutMe'}
                              component={Textarea}
                              validate={[required]}/>
         </div>
-        <div>
+        <div className={styleField.field}>
             <label htmlFor="lookingForAJob"> Looking for a job:</label>
             <Field
                 name={'lookingForAJob'}
@@ -41,12 +42,12 @@ const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsTyp
                 type="checkbox"
             />
         </div>
-        <div>
+        <div className={styleField.field}>
             My professional skills: <Field placeholder={'My professional skills'}
                                            name={'lookingForAJobDescription'}
                                            component={Textarea}/>
         </div>
-        <div> Contacts :
+        <div className={styleField.field}> Contacts :
             {Object.keys(props.contacts).map((el) => {
                 return <Field placeholder={el}
                               name={`contacts.` + el}

@@ -4,6 +4,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    background-color: #f8f8f8;
+    margin-right: 20px;
+    border-radius: 10px;
 }
 
 .photoBlock img {
@@ -12,7 +15,9 @@
 }
 
 .description {
-    width: 70%
+    width: 70%;
+    background-color: #f8f8f8;
+    border-radius: 10px;
 }
 
 .userInfo {

@@ -1,5 +1,5 @@
 import React from "react";
-import s from './Message.module.css'
+import style from './Message.module.css'
 
 type MessageTypeProps = {
     message: string,
@@ -7,7 +7,9 @@ type MessageTypeProps = {
 
 function Message(props: MessageTypeProps) {
     return (
-        <div className={s.message}>{props.message}</div>
+        <div className={style.message}>
+            {props.message}
+        </div>
     );
 }
 

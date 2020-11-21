@@ -1,4 +1,19 @@
 .dialog {
-    padding: 10px;
+    display: flex;
+    min-height: 100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.dialog img {
+    width: 100px;
+    height: 100px;
+}
+
+.dialog a {
+    text-decoration: none;
+    color: #6d6e71;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './Dialogs.module.css'
+import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
@@ -55,14 +55,15 @@ function Dialogs(props: DialogsPropsType) {
 
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
+        <div className={style.dialogs}>
+            <div className={style.dialogsItems}>
                 {dialogsElement}
             </div>
-
-            <div className={s.messages}>
-                {messagesElements}
+            <div className={style.messageForm}>
                 <AddMessageFormRedux onSubmit={addNewMessage}/>
+            </div>
+            <div className={style.messages}>
+                {messagesElements}
             </div>
         </div>
 

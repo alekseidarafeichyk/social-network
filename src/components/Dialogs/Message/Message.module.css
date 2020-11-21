@@ -1,3 +1,13 @@
-.messages {
-    padding: 10px;
+
+
+.message {
+    display: flex;
+    width: 50%;
+    margin: 5px 0px;
+    padding: 5px 0px 0px 5px;
+    position: relative;
+    background-color: #27aae1;
+    border-radius: 10px;
+    min-height: 50px;
 }
+
