@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/Setting/Setting.tsx"],"names":["Setting"],"mappings":"iHAAA,2BAQeA,UANf,WACI,OACI","file":"static/js/10.17194aea.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nfunction Setting() {\r\n    return (\r\n        <div>Settings</div>\r\n    );\r\n}\r\n\r\nexport default Setting;"],"sourceRoot":""}
