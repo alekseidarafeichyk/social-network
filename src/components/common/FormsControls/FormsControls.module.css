@@ -18,3 +18,16 @@
     padding: 5px;
     color: red;
 }
+
+.input {
+    background: #fff;
+    color: #939598;
+    border-radius: 30px;
+    box-shadow: none;
+    outline: none;
+    height: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+

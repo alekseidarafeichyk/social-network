@@ -2,10 +2,11 @@ import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfileType} from '../../reducers/ProfileReducer/profile-reducer';
+import style from './Profile.module.css'
 
 function Profile(props: ProfilePropsType) {
     return (
-        <div>
+        <div className={style.profileContainer}>
             <ProfileInfo profile={props.profile}
                          status={props.status}
                          changeUserStatus={props.changeUserStatus}
@@ -13,7 +14,7 @@ function Profile(props: ProfilePropsType) {
                          savePhoto={props.savePhoto}
                          saveProfileData={props.saveProfileData}
         />
-            <MyPostsContainer/>
+            <MyPostsContainer isOwner={props.isOwner}/>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import userPhoto from '../../assets/images/user.png';
 import {UsersType} from '../../reducers/UsersReducer/users-reducer';
 import {NavLink} from 'react-router-dom';
 import style from './User.module.css'
+import {Button} from '../common/Button/Button';
 
 type UsersPropsType = {
     user: UsersType
@@ -12,8 +13,21 @@ type UsersPropsType = {
 }
 
 function User(props: UsersPropsType) {
+
+    const button = props.user.followed ?
+        <Button name={'Unfollowed'}
+                disabled={props.followingInProgress.some(id => id === props.user.id)}
+                onClick={() => {
+                    props.unFollowUser(props.user.id)
+                }}/>
+        :
+        <Button name={'Followed'}
+                disabled={props.followingInProgress.some(id => id === props.user.id)}
+                onClick={() => {
+                    props.followUser(props.user.id)
+                }}/>
+
     return (
-        <div>
             <div className={style.userContainer}>
                 <div className={style.photo}>
                     <NavLink to={'/profile/' + props.user.id}>
@@ -25,23 +39,11 @@ function User(props: UsersPropsType) {
                         {props.user.name}
                     </h5>
                     <p>{props.user.status}</p>
-                    <div>{'us.location.country'}</div>
-                    <div>{'us.location.city'}</div>
                 </div>
                 <div className={style.btnWrap}>
-                    {props.user.followed ?
-                        <button disabled={props.followingInProgress.some(id => id === props.user.id)}
-                                className={style.btnMode} onClick={() => {
-                            props.unFollowUser(props.user.id)
-                        }}>Unfollowed</button> :
-                        <button disabled={props.followingInProgress.some(id => id === props.user.id)}
-                                className={style.btnMode} onClick={() => {
-                            props.followUser(props.user.id)
-                        }}>Followed</button>
-                    }
+                    {button}
                 </div>
             </div>
-        </div>
     );
 }
 

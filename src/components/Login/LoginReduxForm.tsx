@@ -2,7 +2,8 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Input} from '../common/FormsControls/FormsControls';
 import {required} from '../../utils/validators/validators';
-import style from '../common/FormsControls/FormsControls.module.css'
+import style from './Login.module.css'
+import {Button} from '../common/Button/Button';
 
 export type FormDataType = {
     email: string
@@ -17,16 +18,18 @@ export type LoginPropsType = {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType,LoginPropsType> & LoginPropsType > = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'email'}
+        <form onSubmit={props.handleSubmit} className={style.form}>
+            <div className={style.field}>
+                <Field
+                    placeholder={'email'}
                        name={'email'}
                        component={Input}
                        validate={[required]}
                 />
             </div>
-            <div>
-                <Field placeholder={'password'}
+            <div className={style.field}>
+                <Field
+                    placeholder={'password'}
                        name={'password'}
                        component={Input}
                        validate={[required]}
@@ -46,8 +49,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType,LoginPropsType> & Login
             {props.captcha &&  <Field component={'input'}
                                       name={'captcha'}
                                       />}
-            <div>
-                <button>Login</button>
+            <div className={style.button}>
+                <Button name={'Login'}/>
             </div>
         </form>
     )

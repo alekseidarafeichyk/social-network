@@ -17,6 +17,7 @@ import {
     getUserPage
 } from '../../reducers/UsersReducer/users-selectors';
 import {Loader} from '../common/Loader/Loader';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
 type UsersPropsType = {
@@ -81,6 +82,6 @@ export default compose<React.ComponentType>(
         getUsers: requestUsers,
         unFollowUser: unFollowUserThunk,
         followUser: followUserThunk
-    }))(UsersContainer)
+    }),WithAuthRedirect)(UsersContainer)
 
 

@@ -1,19 +1,24 @@
 import React from "react";
-import s from './Post.module.css'
+import style from './Post.module.css'
+
 
 export type PostPropsType = {
     message : string,
     likeCounts: number
+    isOwner:boolean
 }
 
 function Post(props: PostPropsType) {
+
+    // const postLogo =
+
     return (
         <div>
-            <div className={s.posts}>
-                <div className={s.item}>
+            <div className={style.posts}>
+                <div className={style.item}>
                     <img
-                        src="https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png"
-                        alt=""/>
+                        src={true ? "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png" : ''}
+                       />
                     {props.message}
                     <div>
                         <span>like</span>{props.likeCounts}
