@@ -5,6 +5,7 @@ import {required} from '../../../../utils/validators/validators';
 import {ContactsType} from '../../../../reducers/ProfileReducer/profile-reducer';
 import style from '../../../common/FormsControls/FormsControls.module.css';
 import styleField from './ProfileData.module.css'
+import {Button} from '../../../common/Button/Button';
 
 export type FormDataType = {
     fullName: string
@@ -18,6 +19,16 @@ export type ContactsPropsType = {
 }
 
 const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsType> & ContactsPropsType> = (props) => {
+
+    const contacts = Object.keys(props.contacts).map((el) => {
+        return <div className={style.contact}>
+        <Field placeholder={el}
+                      name={`contacts.` + el}
+                      component={Input}
+        />
+        </div>
+    })
+
     return <form onSubmit={props.handleSubmit}>
         {props.error && <div className={style.formSummaryError}>
             {props.error}
@@ -48,13 +59,8 @@ const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, ContactsPropsTyp
                                            component={Textarea}/>
         </div>
         <div className={styleField.field}> Contacts :
-            {Object.keys(props.contacts).map((el) => {
-                return <Field placeholder={el}
-                              name={`contacts.` + el}
-                              component={Input}
-                />
-            })}
-            {<button type={'submit'}>Save</button>}
+            {contacts}
+            <Button type={'submit'} name={'Save'}/>
         </div>
     </form>
 }

@@ -32,6 +32,18 @@ function ProfileInfo(props: ProfileInfoPropsType) {
          )
     }
 
+    const profileData = editMode ?
+        <ProfileDataReduxForm
+            initialValues={props.profile}
+            onSubmit={onSubmit}
+            contacts={props.profile.contacts}
+        /> :
+        <ProfileData profile={props.profile}
+                     status={props.status}
+                     isOwner={props.isOwner}
+                     onEditMode={onEditMode}
+        />
+
     return (
         <div className={style.userInfo}>
             <div className={style.photoBlock}>
@@ -40,18 +52,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 {props.isOwner && <input type={'file'} onChange={sendMyPhotoOnServer}></input>}
             </div>
             <div className={style.description}>
-                {editMode ?
-                    <ProfileDataReduxForm
-                        initialValues={props.profile}
-                        onSubmit={onSubmit}
-                        contacts={props.profile.contacts}
-                    /> :
-                    <ProfileData profile={props.profile}
-                                 status={props.status}
-                                 isOwner={props.isOwner}
-                                 onEditMode={onEditMode}
-
-                    />}
+                {profileData}
             </div>
         </div>
     );
@@ -64,7 +65,7 @@ type ContactPropsType = {
 }
 
 export const Contact = (props: ContactPropsType) => {
-    return <div>{props.contactTitle} : {props.contactValue}</div>
+    return <div className={style.contact}>{props.contactTitle} : {props.contactValue}</div>
 }
 
 

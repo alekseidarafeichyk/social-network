@@ -26,23 +26,23 @@ beforeEach(() => {
 test('post should be added', () => {
     let endState = profileReducer(startState,addPostAC('new post') )
 
-    expect(endState.posts[2].message).toBe('new post')
-    expect(endState.posts[2].id).toBeDefined()
-    expect(endState.posts[2].likeCounts).toBe(0)
+    expect(endState.posts[0].message).toBe('new post')
+    expect(endState.posts[0].id).toBeDefined()
+    expect(endState.posts[0].likeCounts).toBe(0)
 })
 
-test('post should be added', () => {
+test('data user should be update', () => {
     const profile : ProfileType  = {
         aboutMe: 'I am Alex',
         contacts: {
             facebook: 'facebook',
-            website: null,
+            website: 'null',
             vk: 'vk',
             twitter: 'twitter',
             instagram: 'instagram',
-            youtube: null,
+            youtube: 'null',
             github: 'github',
-            mainLink: null
+            mainLink: 'null'
         },
         lookingForAJob: true,
         lookingForAJobDescription: 'I am frontend',

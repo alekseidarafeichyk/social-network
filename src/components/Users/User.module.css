@@ -1,9 +1,10 @@
 .userContainer {
     display: flex;
+    width: 70%;
     border: 2px solid #f1f2f2;
     border-radius: 10px;
     margin: 10px;
-    width: 50%;
+    padding: 10px;
 }
 
 .userDescription {

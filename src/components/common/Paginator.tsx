@@ -34,10 +34,10 @@ function Paginator(props: PaginatorPropsType) {
             setPortionNumber(portionNumber + 1)
         }} name={'NEXT'}/>
 
-    const paginator = pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
+    const paginatorNumbers = pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
         .map(p => {
             return <span
-                className={props.currentPage === p ? style.selectedPage : ''}
+                className={props.currentPage === p ? style.selectedPage : style.paginatorNumber}
                 key={p}
                 onClick={() => {
                     props.onPageChanged(p)
@@ -47,9 +47,9 @@ function Paginator(props: PaginatorPropsType) {
         })
 
     return (
-        <div>
+        <div className={style.paginator}>
             {buttonPrev}
-            {paginator}
+            {paginatorNumbers}
             {buttonNext}
         </div>
     );

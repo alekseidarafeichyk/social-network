@@ -33,7 +33,7 @@ export const dialogsReducer = (state = initialState, action: DialogsActionType) 
                     ...state.messages,
                     newMessage,
                 ],
-                newMessageText: ''
+
             }
         default:
             return state

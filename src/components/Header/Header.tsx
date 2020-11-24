@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import style from './Header.module.css';
-import logo from '../../assets/images/logo.jpg'
-import { NavLink } from "react-router-dom";
-import classes from '../Navbar/Navbar.module.css';
-import {HeaderContainerPropsType, MapStatePropsType} from './HeaderContainer';
+import logo from '../../assets/images/logo.png'
+import {NavLink} from 'react-router-dom';
+import {HeaderContainerPropsType} from './HeaderContainer';
+import {Button} from '../common/Button/Button';
 
 function Header(props: HeaderContainerPropsType) {
 
@@ -16,11 +16,11 @@ function Header(props: HeaderContainerPropsType) {
             <img
                 src={logo}
                 alt="logo"/>
-                <div className={style.loginBlock}>
-                    { props.auth.isAuth ?
-                        <div>{props.auth.login} - <button onClick={onClickLogout}>logout</button> </div>:
-                    <NavLink to='/login'>Login</NavLink> }
-                </div>
+            <div className={style.loginBlock}>
+                {props.auth.isAuth ?
+                    <div>{props.auth.login} - <Button onClick={onClickLogout} name={'logout'}/></div> :
+                    <NavLink to='/login'>Login</NavLink>}
+            </div>
         </header>
     );
 }

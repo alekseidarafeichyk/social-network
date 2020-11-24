@@ -33,8 +33,7 @@ export const profileReducer = (state
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
+                posts: [newPost,...state.posts],
             };
         case SET_USER_PROFILE : {
             return {

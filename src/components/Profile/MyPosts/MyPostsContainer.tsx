@@ -6,7 +6,8 @@ import {RootState} from '../../../redux/redux-store';
 
 let mapStateToProps = (state: RootState) => {
     return {
-        posts : state.profilePage
+        posts : state.profilePage,
+        myPhoto: state.profilePage.profile?.photos.small
     }
 }
 

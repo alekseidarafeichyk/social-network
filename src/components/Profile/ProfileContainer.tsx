@@ -12,6 +12,7 @@ import {
 import {RouteComponentProps, withRouter} from 'react-router';
 import {compose} from 'redux';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {strict} from 'assert';
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType, RootState> {
 
@@ -57,7 +58,7 @@ const mapStateToProps = (state: RootState) => {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
         authorisedUserId: state.auth.id,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
     }
 }
 

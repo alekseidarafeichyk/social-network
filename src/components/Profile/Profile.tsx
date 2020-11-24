@@ -5,6 +5,9 @@ import {ProfileType} from '../../reducers/ProfileReducer/profile-reducer';
 import style from './Profile.module.css'
 
 function Profile(props: ProfilePropsType) {
+
+    const showMyPosts = props.isOwner ? <MyPostsContainer /> : null
+
     return (
         <div className={style.profileContainer}>
             <ProfileInfo profile={props.profile}
@@ -14,7 +17,7 @@ function Profile(props: ProfilePropsType) {
                          savePhoto={props.savePhoto}
                          saveProfileData={props.saveProfileData}
         />
-            <MyPostsContainer isOwner={props.isOwner}/>
+            {showMyPosts}
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import {maxLengthCreator, required} from '../../../../utils/validators/validators';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Textarea} from '../../../common/FormsControls/FormsControls';
+import {Button} from '../../../common/Button/Button';
 
 
 export type PostFormDataType = {
@@ -20,7 +21,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props) =>
             />
         </div>
         <div>
-            <button>Add post</button>
+            <Button name={'Add post'}/>
         </div>
     </form>
 }

@@ -2,10 +2,12 @@ import React from 'react';
 import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Field, InjectedFormProps, reduxForm, reset} from 'redux-form';
 import {Textarea} from '../common/FormsControls/FormsControls';
 import {maxLengthCreator, required} from '../../utils/validators/validators';
 import {DialogType, MessageType} from '../../reducers/DialogsReducer/dialogs-reducer';
+import {Button} from '../common/Button/Button';
+import {useDispatch} from 'react-redux';
 
 
 type MessageFormDataType = {
@@ -27,7 +29,7 @@ const AddMessageForm: React.FC<InjectedFormProps<MessageFormDataType>> = (props)
                validate={[required, maxLength100]}
 
         />
-        <button>add message</button>
+        <Button name={'Add message'}/>
     </form>
 }
 
@@ -46,11 +48,11 @@ function Dialogs(props: DialogsPropsType) {
                                                                               message={message.message}/>)
     let dialogsElement = props.dialogsPage.dialogs.map(user => <DialogItem key={user.id} name={user.name}
                                                                            id={user.id}/>)
-
+   const dispatch = useDispatch()
 
     const addNewMessage = (formData: MessageFormDataType) => {
         props.addMessage(formData.newMessageBody)
-        console.log(formData)
+        dispatch(reset('message'))
     }
 
 

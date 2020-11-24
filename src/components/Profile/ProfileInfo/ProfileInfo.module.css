@@ -3,7 +3,7 @@
     width: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: start;
     margin-right: 20px;
     border-radius: 10px;
 }
@@ -17,6 +17,11 @@
     width: 70%;
     border-radius: 10px;
 }
+
+.contact {
+    margin: 5px;
+}
+
 
 .userInfo {
     display: flex;

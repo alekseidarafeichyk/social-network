@@ -2,6 +2,7 @@ import {ProfileType} from '../../../../reducers/ProfileReducer/profile-reducer';
 import React from 'react';
 import {Contact} from '../ProfileInfo';
 import style from './ProfileData.module.css'
+import {Button} from '../../../common/Button/Button';
 
 type ProfileDataPropsType = {
     profile: ProfileType
@@ -10,6 +11,11 @@ type ProfileDataPropsType = {
     onEditMode: () => void
 }
 export const ProfileData = (props: ProfileDataPropsType) => {
+
+    const contacts =  Object.keys(props.profile.contacts).map((el) => <Contact key={el}
+                                                                               contactValue={props.profile?.contacts[el]}
+                                                                               contactTitle={el}/>)
+
     return <div>
         <div className={style.field}>
             Full name: {props.profile.fullName}
@@ -23,12 +29,13 @@ export const ProfileData = (props: ProfileDataPropsType) => {
         {props.profile.lookingForAJob && <div className={style.field}>
             My skills: {props.profile.lookingForAJobDescription}
         </div>}
-        <div className={style.field}>Status: {props.status}</div>
-        <div className={style.field}> Contacts :
-            {Object.keys(props.profile.contacts).map((el) => <Contact key={el}
-                                                                      contactValue={props.profile?.contacts[el]}
-                                                                      contactTitle={el}/>)}
+        <div className={style.field}>
+            Status: {props.status}
         </div>
-        {props.isOwner && <button onClick={props.onEditMode}>Edit Profile</button>}
+        <div className={style.field}>
+            Contacts :
+            {contacts}
+        </div>
+        {props.isOwner && <Button onClick={props.onEditMode} name={'Edit Profile'}/>}
     </div>
 }

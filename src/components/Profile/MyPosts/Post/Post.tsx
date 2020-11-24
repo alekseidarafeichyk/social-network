@@ -5,20 +5,18 @@ import style from './Post.module.css'
 export type PostPropsType = {
     message : string,
     likeCounts: number
-    isOwner:boolean
+    myPhoto: string | undefined
 }
 
 function Post(props: PostPropsType) {
 
-    // const postLogo =
+   const srcImg = props.myPhoto ? props.myPhoto : "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png"
 
     return (
         <div>
             <div className={style.posts}>
                 <div className={style.item}>
-                    <img
-                        src={true ? "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png" : ''}
-                       />
+                    <img src={srcImg}/>
                     {props.message}
                     <div>
                         <span>like</span>{props.likeCounts}
